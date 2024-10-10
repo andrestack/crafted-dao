@@ -1,8 +1,8 @@
 
-import { DaoProfitDashboard } from "@/components/dao-profit-dashboard";
+import { DaoDashboard } from "@/components/DaoDashboard";
 
 export default function Home() {
   return (
-    <DaoProfitDashboard />
+    <DaoDashboard />
   )
 }
