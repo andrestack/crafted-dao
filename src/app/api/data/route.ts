@@ -26,7 +26,7 @@ export async function GET() {
     });
 
     const rows = response.data.values;
-    if (rows.length) {
+    if (rows?.length) {
       return NextResponse.json({ data: rows });
     } else {
       return NextResponse.json({ message: "No data found" }, { status: 404 });
