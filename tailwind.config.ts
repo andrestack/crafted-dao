@@ -49,7 +49,12 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+			crafted: {
+				orange: 'hsl(var(--crafted-orange))',
+				black: 'hsl(var(--crafted-black))',
+				white: 'hsl(var(--crafted-white))'
+			}
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -58,6 +63,7 @@ const config: Config = {
   		}
   	}
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
 };
 export default config;
