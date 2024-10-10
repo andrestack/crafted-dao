@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ProjectCard } from "./ProjectCard"; // New component
 import { LockInStatus } from "./LockInStatus"; // New component
 import { ChartData } from "./ChartData"; // New component
-import { Sidebar } from "./Sidebar"; // New Sidebar component
+import { Sidebar } from "./SideBar"; // New Sidebar component
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, PieController);
 
