@@ -3,6 +3,7 @@ import { google } from "googleapis";
 import path from "path";
 import fs from "fs/promises";
 
+
 export async function GET() {
   console.log("Received a GET request to /api/route")
   try {
@@ -33,6 +34,6 @@ export async function GET() {
     }
   } catch (error) {
     console.error("Error fetching sheet data:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }
