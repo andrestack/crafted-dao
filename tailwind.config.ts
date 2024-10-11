@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+		fontFamily: {
+			'league-spartan-bold': ['var(--font-league-spartan-bold)'],
+			'montserrat': ['var(--font-montserrat)']
+		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
