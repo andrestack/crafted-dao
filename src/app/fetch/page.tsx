@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,8 +17,12 @@ const Dashboard = () => {
         const result = await response.json();
         setData(result.data);
       } catch (error) {
-        setError(error.message);
-      }
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred');
+        }
+      } 
     };
 
     fetchData();

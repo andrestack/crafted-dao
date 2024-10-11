@@ -1,7 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
-export function LockInStatus({ daysLeft, progressPercentage }) {
+
+interface LockInStatusProps {
+  daysLeft: number;
+  progressPercentage: number;
+}
+
+export function LockInStatus({ daysLeft, progressPercentage }: LockInStatusProps) {
   return (
     <Card>
       <CardHeader>

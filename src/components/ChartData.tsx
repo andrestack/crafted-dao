@@ -1,7 +1,19 @@
 import { Bar, Pie } from "react-chartjs-2";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function ChartData({ projects, teamMembers }) {
+interface Project {
+  id: number
+  name: string;
+  profit: number;
+}
+
+interface TeamMember {
+  id: number;
+  name: string;
+  profitShare: number;
+}
+
+export function ChartData({ projects, teamMembers }: { projects: Project[], teamMembers: TeamMember[] }) {
   const barChartData = {
     labels: projects.map((project) => project.name),
     datasets: [

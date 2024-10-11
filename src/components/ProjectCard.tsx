@@ -1,7 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity } from "lucide-react";
 
-export function ProjectCard({ project }) {
+interface Project {
+  id: number;
+  name: string;
+  profit: number;
+}
+
+export function ProjectCard({ project }: { project: Project }) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
