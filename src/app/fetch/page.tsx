@@ -1,32 +1,41 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState<string | null>(null);
-
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/data'); 
+        setLoading(true);
+        const response = await fetch("/api/data");
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error("Failed to fetch data");
         }
         const result = await response.json();
+        console.log(result);
         setData(result.data);
+        setLoading(false);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
+          setLoading(false);
         } else {
-          setError('An unknown error occurred');
+          setError("An unknown error occurred");
+          setLoading(false);
         }
-      } 
+      }
     };
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -34,15 +43,20 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>Google Sheets Data</h1>
+      <h1>Team Dashboard</h1>
       {data.length > 0 ? (
-        data.map((row, index) => (
+        data.map((person, index) => (
           <div key={index}>
-            <p>Row: {row}</p>
+            <h2>{person.name}</h2>
+            <p>Profit Staked: {person.profitStaked}</p>
+            <p>Profit Available: {person.profitAvailable}</p>
+            <p>Jobs Completed: {person.jobsCompleted}</p>
+            <p>Treasury Total: {person.treasuryTotal}</p>{" "}
+            {/* Treasury Total is included */}
           </div>
         ))
       ) : (
-        <p>Loading...</p>
+        <p>No data available</p>
       )}
     </div>
   );

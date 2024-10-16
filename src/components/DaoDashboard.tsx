@@ -39,7 +39,6 @@ export function DaoDashboard() {
       case "dashboard":
         return (
           <>
-            <LockInStatus daysLeft={daysLeft} progressPercentage={progressPercentage} />
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               {projects.map((project) => (
                 <ProjectCard key={project.id} project={project} />
@@ -60,7 +59,8 @@ export function DaoDashboard() {
       <Sidebar activeMenuItem={activeMenuItem} setActiveMenuItem={setActiveMenuItem} />
 
       <div className="flex flex-1 flex-col">
-        <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-end gap-4 border-b bg-background px-4 md:px-6">
+        <h1 className="text-2xl font-bold">{activeMenuItem === "lock-in" ? "Lock-in Period Status" : "Dashboard Overview"}</h1>
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="shrink-0 lg:hidden">
@@ -87,7 +87,7 @@ export function DaoDashboard() {
           </Sheet>
         </header>
         <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          <h1 className="mb-4 text-2xl font-bold">{activeMenuItem === "lock-in" ? "Lock-in Period Status" : "Dashboard Overview"}</h1>
+          
           {renderContent()}
         </main>
       </div>
