@@ -18,7 +18,7 @@ export async function GET() {
 
     const spreadsheetId = process.env.SPREADSHEET_ID;
     const mainRange = "Overview!E3:J34";
-    const treasuryRange = "Overview!L14:O17";
+    const treasuryRange = "Overview!N14:O17";
     const overHeadRange = "Overview!C34";
 
     const [mainResponse, treasuryResponse, overheadResponse] =
@@ -40,6 +40,10 @@ export async function GET() {
     const mainRows = mainResponse.data.values;
     const treasuryRows = treasuryResponse.data.values;
     const overheadRows = overheadResponse.data.values;
+
+    if (!mainRows || mainRows.length === 0) {
+      return NextResponse.json({ message: "No data found" }, { status: 404 });
+    }
 
     //extract first row
     const names = mainRows[0];
@@ -63,6 +67,7 @@ export async function GET() {
     const profitStakedRow = mainRows[profitStakedIndex];
     const profitAvailableRow = mainRows[profitAvailableIndex];
     const jobsCompletedRow = mainRows[jobsCompletedIndex];
+    
     
 
     //create a structure response by mapping the data by name

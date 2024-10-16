@@ -2,8 +2,19 @@
 
 import { useEffect, useState } from "react";
 
+// Define an interface for the structure of your data
+interface PersonData {
+  name: string;
+  profitStaked: string | null;
+  profitAvailable: string | null;
+  jobsCompleted: string | null;
+  treasuryTotal: string | null;
+  overhead: string | null;
+}
+
 const Dashboard = () => {
-  const [data, setData] = useState([]);
+  // Specify the type of data
+  const [data, setData] = useState<PersonData[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -22,11 +33,10 @@ const Dashboard = () => {
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
-          setLoading(false);
         } else {
           setError("An unknown error occurred");
-          setLoading(false);
         }
+        setLoading(false);
       }
     };
 
@@ -51,8 +61,8 @@ const Dashboard = () => {
             <p>Profit Staked: {person.profitStaked}</p>
             <p>Profit Available: {person.profitAvailable}</p>
             <p>Jobs Completed: {person.jobsCompleted}</p>
-            <p>Treasury Total: {person.treasuryTotal}</p>{" "}
-            {/* Treasury Total is included */}
+            <p>Treasury Total: {person.treasuryTotal}</p>
+            <p>Overhead: {person.overhead}</p>
           </div>
         ))
       ) : (
