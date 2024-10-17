@@ -22,6 +22,7 @@ import { TreasuryCard } from "./TreasuryCard";
 import { OverheadsCard } from "./OverheadsCard";
 import { ChartData } from "./PieChartData";
 import { ProfitAvailableCard } from "./ProfitAvailableCard";
+import { ProjectCard } from "./ProjectCard";
 
 ChartJS.register(
   CategoryScale,
@@ -99,7 +100,11 @@ export function DaoDashboard() {
 
                 <ProfitAvailableCard data={data} />
               </div>
+              
             </div>
+            <div className="flex justify-between ">
+                <ProjectCard data={data} />
+              </div>
           </>
         );
       case "lock-in":

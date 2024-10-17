@@ -1,50 +1,80 @@
-'use client'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import {
+  User,
+  Briefcase,
+  Coffee,
+  Book,
+  Pen,
+  Laptop,
+  Phone,
+  Camera,
+} from "lucide-react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ScrollArea } from "@/components/ui/scroll-area"
+const icons = [User, Briefcase, Coffee, Book, Pen, Laptop, Phone, Camera];
 
-interface Employee {
-  name: string;
-  email: string;
-  availableProfit: number;
-}
+export function ProfitAvailableCard({ data }) {
+  // Extract and clean the available profit data
+  const displayEmployees = data.slice(1, 5).map((employee) => {
+    const rawValue = employee.profitAvailable || "$0"; // Fallback to "$0" if missing
+    const cleanedValue = rawValue.replace(/[$,]/g, ""); // Remove $ sign and commas
+    const availableProfit = parseFloat(cleanedValue); // Parse cleaned value into a float
 
-export function ProfitAvailableCard({ employees = [] }: { employees?: Employee[] }) {
-  const defaultEmployees: Employee[] = [
-    { name: "Olivia Martin", email: "olivia.martin@email.com", availableProfit: 1999 },
-    { name: "Jackson Lee", email: "jackson.lee@email.com", availableProfit: 39 },
-    { name: "Isabella Nguyen", email: "isabella.nguyen@email.com", availableProfit: 299 },
-    { name: "William Kim", email: "william.kim@email.com", availableProfit: 99 },
-    { name: "Sofia Davis", email: "sofia.davis@email.com", availableProfit: 699 },
-  ]
+    return {
+      ...employee,
+      availableProfit,
+    };
+  });
 
-  const displayEmployees = employees.length > 0 ? employees : defaultEmployees
+  console.log("Parsed available profits:", displayEmployees); // Debugging log to check the values
 
   return (
     <Card className="w-full max-w-md bg-white border border-crafted-orange">
       <CardHeader>
-        <CardTitle className="text-2xl font-league-spartan-bold text-crafted-orange">Employee Profit Withdrawal</CardTitle>
+        <CardTitle className="text-2xl font-league-spartan-bold text-crafted-orange">
+          Employee Profit Available
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[300px] pr-4">
-          {displayEmployees.map((employee, index) => (
-            <div key={index} className="flex items-center mb-4 last:mb-0">
-              <Avatar className="h-9 w-9">
-                <AvatarImage src={`/placeholder.svg?text=${employee.name.charAt(0)}`} alt={employee.name} />
-                <AvatarFallback>{employee.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className="ml-4 space-y-1">
-                <p className="text-sm font-medium text-black">{employee.name}</p>
-                <p className="text-xs text-gray-600">{employee.email}</p>
+          {displayEmployees.map((employee, index) => {
+            const IconComponent = icons[index % icons.length];
+            return (
+              <div key={index}>
+                <div className="flex items-center py-4">
+                  <div className="h-9 w-9 rounded-full bg-orange-100 flex items-center justify-center">
+                    <IconComponent className="h-5 w-5 text-orange-500" />
+                  </div>
+                  <div className="ml-4 space-y-1">
+                    <p className="text-sm font-medium text-black">
+                      {employee.name}
+                    </p>
+                  </div>
+                  <div className="ml-auto font-medium text-black">
+                    ${employee.availableProfit.toFixed(2)}
+                  </div>
+                </div>
+                {index < displayEmployees.length - 1 && (
+                  <Separator className="bg-orange-200" />
+                )}
               </div>
-              <div className="ml-auto font-medium text-black">
-                ${employee.availableProfit.toFixed(2)}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </ScrollArea>
+        <CardFooter className="flex justify-center">
+          <Button>Available in 30 days</Button>
+        </CardFooter>
       </CardContent>
     </Card>
-  )
+
+    
+  );
 }
