@@ -29,7 +29,7 @@ export async function GET() {
     const treasuryTotalValue = "Overview!N14:O17";
     const overHeadRange = "Overview!C34";
 
-    const [mainResponse, treasuryResponse, overheadResponse] =
+    const [profitBankResponse, treasuryResponse, overheadResponse] =
       await Promise.all([
         sheets.spreadsheets.values.get({
           spreadsheetId,

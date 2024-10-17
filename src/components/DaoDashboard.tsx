@@ -6,10 +6,10 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { Clock, Home, Menu, Package2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ProjectCard } from "./ProjectCard"; // New component
-import { LockInStatus } from "./LockInStatus"; // New component
-import { ChartData } from "./ChartData"; // New component
-import { Sidebar } from "./SideBar"; // New Sidebar component
+import { ProjectCard } from "./ProjectCard";
+import { LockInStatus } from "./LockInStatus"; 
+import { ChartData } from "./PieChartData"; 
+import { Sidebar } from "./SideBar";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, PieController);
 
@@ -17,9 +17,9 @@ export function DaoDashboard() {
   const [activeMenuItem, setActiveMenuItem] = useState("dashboard");
 
   const projects = [
-    { id: 1, name: "Project A", profit: 50000 },
-    { id: 2, name: "Project B", profit: -10000 },
-    { id: 3, name: "Project C", profit: 30000 },
+    { id: 1, name: "Project A", complete: 50 },
+    { id: 2, name: "Project B", complete: 100 },
+    { id: 3, name: "Project C", complete: 25 },
   ];
 
   const teamMembers = [
