@@ -17,6 +17,14 @@ export async function GET() {
     const sheets = google.sheets({ version: "v4", auth });
 
     const spreadsheetId = process.env.SPREADSHEET_ID;
+
+    if (!spreadsheetId) {
+      return NextResponse.json(
+        { message: "SPREADSHEET_ID environment variable is not set" },
+        { status: 500 }
+      );
+    }
+
     const mainRange = "Overview!E3:J34";
     const treasuryRange = "Overview!N14:O17";
     const overHeadRange = "Overview!C34";
@@ -41,8 +49,11 @@ export async function GET() {
     const treasuryRows = treasuryResponse.data.values;
     const overheadRows = overheadResponse.data.values;
 
-    if (!mainRows || mainRows.length === 0) {
-      return NextResponse.json({ message: "No data found" }, { status: 404 });
+    if (!mainRows || !treasuryRows || !overheadRows) {
+      return NextResponse.json(
+        { message: "Incomplete data received from data source" },
+        { status: 500 }
+      );
     }
 
     //extract first row
@@ -62,13 +73,29 @@ export async function GET() {
       (header) => header && header.includes("# Jobs Completed")
     );
 
+    if (
+      profitStakedIndex === -1 ||
+      profitAvailableIndex === -1 ||
+      jobsCompletedIndex === -1
+    ) {
+      return NextResponse.json(
+        { message: "Required headers not found in the spreadsheet" },
+        { status: 500 }
+      );
+    }
+
     //dynamically retrieve the rows based on their index
 
     const profitStakedRow = mainRows[profitStakedIndex];
     const profitAvailableRow = mainRows[profitAvailableIndex];
     const jobsCompletedRow = mainRows[jobsCompletedIndex];
-    
-    
+
+    if (!profitStakedRow || !profitAvailableRow || !jobsCompletedRow) {
+      return NextResponse.json(
+        { message: "Required data rows not found in the spreadsheet" },
+        { status: 500 }
+      );
+    }
 
     //create a structure response by mapping the data by name
     const structuredData = names.map((name, index) => ({
@@ -80,16 +107,18 @@ export async function GET() {
       overhead: overheadRows ? overheadRows[index] : null,
     }));
 
-    if (mainRows?.length) {
+    if (structuredData?.length) {
       return NextResponse.json({ data: structuredData });
     } else {
       return NextResponse.json({ message: "No data found" }, { status: 404 });
     }
   } catch (error) {
     console.error("Error fetching sheet data:", error);
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
+    let errorMessage = "An unknown error occurred";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
