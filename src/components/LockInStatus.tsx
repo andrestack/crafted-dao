@@ -2,12 +2,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Progress } from "@/components/ui/progress";
 
 
-interface LockInStatusProps {
-  daysLeft: number;
-  progressPercentage: number;
-}
 
-export function LockInStatus({ daysLeft, progressPercentage }: LockInStatusProps) {
+export function LockInStatus() {
+  const lockInPeriodEnd = new Date("2024-12-01T00:00:00");
+  const now = new Date();
+  const daysLeft = Math.ceil((lockInPeriodEnd.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+  const progressPercentage = 100 - (daysLeft / 90) * 100; // Assuming 90-day lock-in period
+  
   return (
     <Card>
       <CardHeader>
