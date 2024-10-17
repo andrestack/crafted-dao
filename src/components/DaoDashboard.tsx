@@ -20,8 +20,8 @@ import { LockInStatus } from "./LockInStatus";
 import { Sidebar } from "./SideBar";
 import { TreasuryCard } from "./TreasuryCard";
 import { OverheadsCard } from "./OverheadsCard";
-//import { ProjectCard } from "./ProjectCard";
-//import { ChartData } from "./PieChartData";
+import { ChartData } from "./PieChartData";
+import { ProfitAvailableCard } from "./ProfitAvailableCard";
 
 ChartJS.register(
   CategoryScale,
@@ -87,21 +87,26 @@ export function DaoDashboard() {
       case "dashboard":
         return (
           <>
-            <div className="flex justify-around gap-4">
-              <OverheadsCard
-                dailyOverheads={data[0]?.overhead || "No data available"}
-              />
-              <TreasuryCard
-                treasuryTotal={data[0]?.treasuryTotal || "No data available"}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <OverheadsCard
+                  dailyOverheads={data[0]?.overhead || "No data available"}
+                />
+                <TreasuryCard
+                  treasuryTotal={data[0]?.treasuryTotal || "No data available"}
+                />
+                <ChartData data={data} />
+
+                <ProfitAvailableCard data={data} />
+              </div>
             </div>
           </>
         );
       case "lock-in":
         return (
           <LockInStatus
-            daysLeft={daysLeft}
-            progressPercentage={progressPercentage}
+            daysLeft={30} // Replace with actual value
+            progressPercentage={50} // Replace with actual value
           />
         );
       default:
@@ -117,7 +122,7 @@ export function DaoDashboard() {
       />
 
       <div className="flex flex-1 flex-col">
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-end gap-4 border-b bg-background px-4 md:px-6">
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">
           <h1 className="text-2xl font-bold">
             {activeMenuItem === "lock-in"
               ? "Lock-in Period Status"

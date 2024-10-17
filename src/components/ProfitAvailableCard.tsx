@@ -22,9 +22,9 @@ export function ProfitAvailableCard({ employees = [] }: { employees?: Employee[]
   const displayEmployees = employees.length > 0 ? employees : defaultEmployees
 
   return (
-    <Card className="w-full max-w-md bg-white border border-orange-500">
+    <Card className="w-full max-w-md bg-white border border-crafted-orange">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-orange-500">Employee Profit Withdrawal</CardTitle>
+        <CardTitle className="text-2xl font-league-spartan-bold text-crafted-orange">Employee Profit Withdrawal</CardTitle>
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[300px] pr-4">
