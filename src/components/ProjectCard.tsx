@@ -9,7 +9,7 @@ export function ProjectCard({ data }) {
     };
   });
 
-  console.log("Project data:", projectData);
+  
 
   return (
     <>

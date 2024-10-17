@@ -1,7 +1,11 @@
 import { Pie } from "react-chartjs-2";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export function ChartData({ data }) {
+interface ChartDataProps {
+  data: PersonData[];
+}
+
+export function ChartData({ data }: ChartDataProps) {
   // Extract names and profitStaked values from the data array
   const names = data.slice(1, 5).map((person) => person.name);
   const profitStaked = data.slice(1, 5).map((person) => {
@@ -10,7 +14,7 @@ export function ChartData({ data }) {
     return parseFloat(cleanedValue);
   });
 
-  console.log("profitStaked", profitStaked);
+
 
   // const isValidData = profitStaked.every(
   //   (value) => typeof value === "number" && !isNaN(value)

@@ -16,7 +16,7 @@ import {
 import { Clock, Home, Menu, Package2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { LockInStatus } from "./LockInStatus";
+//import { LockInStatus } from "./LockInStatus";
 import { Sidebar } from "./SideBar";
 import { TreasuryCard } from "./TreasuryCard";
 import { OverheadsCard } from "./OverheadsCard";
@@ -41,7 +41,7 @@ interface PersonData {
   profitAvailable: string | null;
   jobsCompleted: string | null;
   treasuryTotal: string | null;
-  overhead: string | null;
+  overhead: string | number | null;
 }
 
 export function DaoDashboard() {
@@ -90,30 +90,25 @@ export function DaoDashboard() {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <OverheadsCard
-                  dailyOverheads={data[0]?.overhead || "No data available"}
-                />
-                <TreasuryCard
-                  treasuryTotal={data[0]?.treasuryTotal || "No data available"}
-                />
+                <OverheadsCard dailyOverheads={data[0]?.overhead} />
+                <TreasuryCard treasuryTotal={data[0]?.treasuryTotal} />
                 <ChartData data={data} />
 
                 <ProfitAvailableCard data={data} />
               </div>
-              
             </div>
             <div className="flex justify-between ">
-                <ProjectCard data={data} />
-              </div>
+              <ProjectCard data={data} />
+            </div>
           </>
         );
-      case "lock-in":
-        return (
-          <LockInStatus
-            daysLeft={30} // Replace with actual value
-            progressPercentage={50} // Replace with actual value
-          />
-        );
+      // case "lock-in":
+      //   return (
+      //     <LockInStatus
+      //       daysLeft={30} // Replace with actual value
+      //       progressPercentage={50} // Replace with actual value
+      //     />
+      //   );
       default:
         return null;
     }

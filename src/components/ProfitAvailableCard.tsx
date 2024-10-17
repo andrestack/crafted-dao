@@ -21,7 +21,11 @@ import {
 
 const icons = [User, Briefcase, Coffee, Book, Pen, Laptop, Phone, Camera];
 
-export function ProfitAvailableCard({ data }) {
+interface ProfitAvailableCardProps {
+  data: PersonData[]; // Assuming it uses the same data structure
+}
+
+export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
   // Extract and clean the available profit data
   const displayEmployees = data.slice(1, 5).map((employee) => {
     const rawValue = employee.profitAvailable || "$0"; // Fallback to "$0" if missing
@@ -34,8 +38,7 @@ export function ProfitAvailableCard({ data }) {
     };
   });
 
-  console.log("Parsed available profits:", displayEmployees); // Debugging log to check the values
-
+  
   return (
     <Card className="w-full max-w-md bg-white border border-crafted-orange">
       <CardHeader>
@@ -70,7 +73,7 @@ export function ProfitAvailableCard({ data }) {
           })}
         </ScrollArea>
         <CardFooter className="flex justify-center">
-          <Button>Available in 30 days</Button>
+          <Button className="text-lg font-league-spartan-bold">Available in 30 days</Button>
         </CardFooter>
       </CardContent>
     </Card>
