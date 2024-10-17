@@ -25,19 +25,19 @@ export async function GET() {
       );
     }
 
-    const mainRange = "Overview!E3:J34";
-    const treasuryRange = "Overview!N14:O17";
+    const profitBankRange = "Overview!E3:J34";
+    const treasuryTotalValue = "Overview!N14:O17";
     const overHeadRange = "Overview!C34";
 
     const [mainResponse, treasuryResponse, overheadResponse] =
       await Promise.all([
         sheets.spreadsheets.values.get({
           spreadsheetId,
-          range: mainRange,
+          range: profitBankRange,
         }),
         sheets.spreadsheets.values.get({
           spreadsheetId,
-          range: treasuryRange,
+          range: treasuryTotalValue,
         }),
         sheets.spreadsheets.values.get({
           spreadsheetId,
@@ -45,11 +45,11 @@ export async function GET() {
         }),
       ]);
 
-    const mainRows = mainResponse.data.values;
-    const treasuryRows = treasuryResponse.data.values;
+    const profitBankRows = profitBankResponse.data.values;
+    const treasuryTotalRows = treasuryResponse.data.values;
     const overheadRows = overheadResponse.data.values;
 
-    if (!mainRows || !treasuryRows || !overheadRows) {
+    if (!profitBankRows || !treasuryTotalRows || !overheadRows) {
       return NextResponse.json(
         { message: "Incomplete data received from data source" },
         { status: 500 }
@@ -57,10 +57,10 @@ export async function GET() {
     }
 
     //extract first row
-    const names = mainRows[0];
+    const names = profitBankRows[0];
 
     // dynamically locate the headers by searching for keywords in rows
-    const headers = mainRows.map((row) => row[0]);
+    const headers = profitBankRows.map((row) => row[0]);
 
     // find each row indeces for each metric dynamically
     const profitStakedIndex = headers.findIndex(
@@ -86,9 +86,9 @@ export async function GET() {
 
     //dynamically retrieve the rows based on their index
 
-    const profitStakedRow = mainRows[profitStakedIndex];
-    const profitAvailableRow = mainRows[profitAvailableIndex];
-    const jobsCompletedRow = mainRows[jobsCompletedIndex];
+    const profitStakedRow = profitBankRows[profitStakedIndex];
+    const profitAvailableRow = profitBankRows[profitAvailableIndex];
+    const jobsCompletedRow = profitBankRows[jobsCompletedIndex];
 
     if (!profitStakedRow || !profitAvailableRow || !jobsCompletedRow) {
       return NextResponse.json(
@@ -103,7 +103,7 @@ export async function GET() {
       profitStaked: profitStakedRow ? profitStakedRow[index] : null,
       profitAvailable: profitAvailableRow ? profitAvailableRow[index] : null,
       jobsCompleted: jobsCompletedRow ? jobsCompletedRow[index] : null,
-      treasuryTotal: treasuryRows ? treasuryRows[index] : null,
+      treasuryTotal: treasuryTotalRows ? treasuryTotalRows[index] : null,
       overhead: overheadRows ? overheadRows[index] : null,
     }));
 
