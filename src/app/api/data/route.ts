@@ -7,14 +7,14 @@ export async function GET() {
   console.log("Received a GET request to /api/route");
   try {
     const rawCredentials = process.env.GOOGLE_CREDENTIALS;
-    console.log("Raw credentials:", rawCredentials);
+    //console.log("Raw credentials:", rawCredentials);
     
     if (!rawCredentials) {
       throw new Error("GOOGLE_CREDENTIALS environment variable is not set");
     }
     
     // Log the first few characters of the credentials
-    console.log("First 50 characters of credentials:", rawCredentials.substring(0, 50));
+    //console.log("First 50 characters of credentials:", rawCredentials.substring(0, 50));
     
     let credentials;
     try {
@@ -24,7 +24,7 @@ export async function GET() {
       throw new Error("Invalid JSON in GOOGLE_CREDENTIALS environment variable");
     }
     
-    console.log("Parsed credentials:", credentials);
+    //console.log("Parsed credentials:", credentials);
 
     const auth = new google.auth.GoogleAuth({
       credentials: credentials,

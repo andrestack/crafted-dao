@@ -13,7 +13,7 @@ import {
   ArcElement,
   PieController,
 } from "chart.js";
-import { Clock, Home, Menu, Package2 } from "lucide-react";
+import { Home, Menu, Paintbrush } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 //import { LockInStatus } from "./LockInStatus";
@@ -139,7 +139,7 @@ export function DaoDashboard() {
                   href="#"
                   className="flex items-center gap-2 px-3 py-2 text-lg font-semibold"
                 >
-                  <Package2 className="h-6 w-6" />
+                  <Paintbrush className="h-6 w-6" />
                   <span>Crafted DAO</span>
                 </Link>
                 <Button
@@ -152,14 +152,14 @@ export function DaoDashboard() {
                   <Home className="mr-2 h-4 w-4" />
                   Dashboard
                 </Button>
-                <Button
+                {/* <Button
                   variant={activeMenuItem === "lock-in" ? "secondary" : "ghost"}
                   className="w-full justify-start"
                   onClick={() => setActiveMenuItem("lock-in")}
                 >
                   <Clock className="mr-2 h-4 w-4" />
                   Lock-in Period
-                </Button>
+                </Button> */}
               </nav>
             </SheetContent>
           </Sheet>
