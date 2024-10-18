@@ -18,6 +18,7 @@ import {
   Phone,
   Camera,
 } from "lucide-react";
+import { PersonData } from "@/interfaces";
 
 const icons = [User, Briefcase, Coffee, Book, Pen, Laptop, Phone, Camera];
 
@@ -29,16 +30,36 @@ export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
   // Extract and clean the available profit data
   const displayEmployees = data.slice(1, 5).map((employee) => {
     const rawValue = employee.profitAvailable || "$0"; // Fallback to "$0" if missing
-    const cleanedValue = rawValue.replace(/[$,]/g, ""); // Remove $ sign and commas
-    const availableProfit = parseFloat(cleanedValue); // Parse cleaned value into a float
+
+    // Handle different types of rawValue, similar to other components
+    let cleanedValue: number = 0;
+
+    if (typeof rawValue === "string") {
+      // Clean string values by removing $ and commas
+      cleanedValue = parseFloat(rawValue.replace(/[$,]/g, "")) || 0;
+    } else if (typeof rawValue === "number") {
+      // If it's already a number, use it directly
+      cleanedValue = rawValue;
+    } else if (Array.isArray(rawValue) && rawValue.length > 0) {
+      // If it's an array, clean the first element as a string
+      cleanedValue = parseFloat(rawValue[0].replace(/[$,]/g, "")) || 0;
+    } else if (typeof rawValue === "object" && rawValue !== null && 'value' in rawValue) {
+      // Handle the case where rawValue is an object, and extract its value
+      const value = rawValue.value;
+      cleanedValue = typeof value === "string"
+        ? parseFloat(value.replace(/[$,]/g, "")) || 0
+        : typeof value === "number" ? value : 0;
+    } else {
+      // Fallback to 0 for unexpected cases
+      cleanedValue = 0;
+    }
 
     return {
       ...employee,
-      availableProfit,
+      availableProfit: cleanedValue,
     };
   });
 
-  
   return (
     <Card className="w-full max-w-md bg-white border border-crafted-orange">
       <CardHeader>
@@ -73,11 +94,11 @@ export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
           })}
         </ScrollArea>
         <CardFooter className="flex justify-center">
-          <Button className="text-lg font-league-spartan-bold">Available in 30 days</Button>
+          <Button className="text-lg font-league-spartan-bold">
+            Available in 30 days
+          </Button>
         </CardFooter>
       </CardContent>
     </Card>
-
-    
   );
 }

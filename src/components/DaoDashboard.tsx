@@ -23,7 +23,7 @@ import { OverheadsCard } from "./OverheadsCard";
 import { ChartData } from "./PieChartData";
 import { ProfitAvailableCard } from "./ProfitAvailableCard";
 import { ProjectCard } from "./ProjectCard";
-
+import { PersonData } from "@/interfaces";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -35,14 +35,7 @@ ChartJS.register(
   PieController
 );
 
-interface PersonData {
-  name: string;
-  profitStaked: string | null;
-  profitAvailable: string | null;
-  jobsCompleted: string | null;
-  treasuryTotal: string | null;
-  overhead: string | number | null;
-}
+
 
 export function DaoDashboard() {
   const [activeMenuItem, setActiveMenuItem] = useState("dashboard");
@@ -82,6 +75,7 @@ export function DaoDashboard() {
   if (error) {
     return <div>Error: {error}</div>;
   }
+  console.log("Treasury total data in production:", data[0]?.treasuryTotal);
 
   const renderContent = () => {
     switch (activeMenuItem) {

@@ -1,15 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Activity } from "lucide-react";
+import { PersonData } from "@/interfaces";
 
-export function ProjectCard({ data }) {
+interface ProjectCardProps {
+  data: PersonData[];
+}
+
+export function ProjectCard({ data }: ProjectCardProps) {
   const projectData = data.slice(1, 5).map((employee) => {
     return {
       name: employee.name,
       jobsCompleted: employee.jobsCompleted,
     };
   });
-
-  
 
   return (
     <>

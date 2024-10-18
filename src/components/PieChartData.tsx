@@ -1,17 +1,42 @@
 import { Pie } from "react-chartjs-2";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PersonData } from "@/interfaces";
 
 interface ChartDataProps {
-  data: PersonData[];
+data: PersonData[];
+
 }
 
 export function ChartData({ data }: ChartDataProps) {
   // Extract names and profitStaked values from the data array
   const names = data.slice(1, 5).map((person) => person.name);
   const profitStaked = data.slice(1, 5).map((person) => {
-    const rawValue = person.profitStaked || 0;
-    const cleanedValue = parseFloat(rawValue.replace(/[$,]/g, ""));
-    return parseFloat(cleanedValue);
+    const rawValue = person.profitStaked || 0; // Handle undefined or null
+  
+    // Handle different types of rawValue, including objects
+    let cleanedValue: number = 0;
+  
+    if (typeof rawValue === "string") {
+      // Clean string values by removing $ and commas
+      cleanedValue = parseFloat(rawValue.replace(/[$,]/g, "")) || 0;
+    } else if (typeof rawValue === "number") {
+      // If it's a number, use it as-is
+      cleanedValue = rawValue;
+    } else if (Array.isArray(rawValue) && rawValue.length > 0) {
+      // If it's an array, clean the first element as a string
+      cleanedValue = parseFloat(rawValue[0].replace(/[$,]/g, "")) || 0;
+    } else if (typeof rawValue === "object" && rawValue !== null && 'value' in rawValue) {
+      // Handle the case where rawValue is an object, and extract its value
+      const value = rawValue.value;
+      cleanedValue = typeof value === "string"
+        ? parseFloat(value.replace(/[$,]/g, "")) || 0
+        : typeof value === "number" ? value : 0;
+    } else {
+      // Fallback to 0 for unexpected cases
+      cleanedValue = 0;
+    }
+  
+    return cleanedValue;
   });
 
 
