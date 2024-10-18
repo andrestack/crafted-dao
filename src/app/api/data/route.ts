@@ -1,16 +1,33 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
-import path from "path";
-import fs from "fs/promises";
+//import path from "path";
+//import fs from "fs/promises";
 
 export async function GET() {
   console.log("Received a GET request to /api/route");
   try {
-    const credentialsPath = path.join(process.cwd(), "streetcred.json");
-    const credentials = await fs.readFile(credentialsPath, "utf-8");
+    const rawCredentials = process.env.GOOGLE_CREDENTIALS;
+    console.log("Raw credentials:", rawCredentials);
+    
+    if (!rawCredentials) {
+      throw new Error("GOOGLE_CREDENTIALS environment variable is not set");
+    }
+    
+    // Log the first few characters of the credentials
+    console.log("First 50 characters of credentials:", rawCredentials.substring(0, 50));
+    
+    let credentials;
+    try {
+      credentials = JSON.parse(rawCredentials);
+    } catch (parseError) {
+      console.error("Error parsing GOOGLE_CREDENTIALS:", parseError);
+      throw new Error("Invalid JSON in GOOGLE_CREDENTIALS environment variable");
+    }
+    
+    console.log("Parsed credentials:", credentials);
 
     const auth = new google.auth.GoogleAuth({
-      credentials: JSON.parse(credentials),
+      credentials: credentials,
       scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
     });
 
