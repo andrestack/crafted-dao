@@ -1,10 +1,11 @@
+"use client";
 
-import { DaoDashboard } from "@/components/DaoDashboard";
+import DashboardManager from '@/components/DashboardManager';
 
 export default function Home() {
   return (
     <div className="font-montserrat">
-      <DaoDashboard />
+      <DashboardManager />
     </div>
   )
 }
