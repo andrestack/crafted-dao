@@ -87,7 +87,7 @@ export function PieChartData({ data }: ChartDataProps) {
             Profit Staked in $
           </CardTitle>
         </CardHeader>
-        <CardContent className="w-full h-full">
+        <CardContent className="">
           <Pie data={pieChartData} />
           </CardContent>
         </Card>

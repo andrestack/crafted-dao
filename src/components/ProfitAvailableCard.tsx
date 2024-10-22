@@ -85,7 +85,7 @@ export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[300px] pr-4">
+        <ScrollArea className="h-fit pr-4">
           {displayEmployees.map((employee, index) => {
             const IconComponent = icons[index % icons.length];
             return (

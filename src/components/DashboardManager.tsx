@@ -79,7 +79,7 @@ export default function DashboardManager() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center gap-2 items-center h-screen">
         <LoadingSpinner />
         <span className="text-crafted-black text-lg font-league-spartan-bold">Loading</span>
       </div>
