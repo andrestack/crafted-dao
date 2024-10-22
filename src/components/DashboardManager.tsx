@@ -26,12 +26,12 @@ export default function DashboardManager() {
           throw new Error("Failed to fetch data");
         }
         const result = await response.json();
-        
+
         // Assuming the API returns an array of person data
         const formattedData = result.data.map(
           (person: Omit<PersonData, "id">, index: number) => ({
             ...person,
-            id: person.id || `person-${index}`, // Use existing id or generate one
+            id: `person-${index}`, // Generate a new ID based on the index
           })
         );
         console.log("Formatted data:", formattedData);
@@ -40,7 +40,6 @@ export default function DashboardManager() {
         setError(
           error instanceof Error ? error.message : "An unknown error occurred"
         );
-        
       } finally {
         setLoading(false);
       }
@@ -54,12 +53,11 @@ export default function DashboardManager() {
   };
 
   const getFilteredData = () => {
-    
     if (selectedMember === "home") {
       return data;
     }
     const filtered = data.filter((person) => person.id === selectedMember);
-    
+
     if (filtered.length > 0) {
       return filtered; // Return filtered data as an array
     }
@@ -77,7 +75,6 @@ export default function DashboardManager() {
 
   const globalTreasury = data[0]?.treasuryTotal || [];
   const globalOverhead = data[0]?.overhead || [];
-
 
   if (loading) {
     return <div>Loading...</div>;

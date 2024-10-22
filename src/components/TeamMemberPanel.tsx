@@ -37,13 +37,22 @@ export default function TeamMemberPanel({
 
   const teamMembers = useMemo(
     () => [
-      { id: "home", name: "Overview", icon: Home as LucideIcon },
-      ...data.slice(1, 5).map((person) => ({ id: person.id, name: person.name })),
+      { id: "home", name: "Overview", icon: Home as LucideIcon, profitStaked: 0, profitAvailable: 0, jobsCompleted: 0, treasuryTotal: 0, overhead: 0 },
+      ...data.slice(1, 5).map((person) => ({
+        id: person.id,
+        name: person.name,
+        icon: person.icon,
+        profitStaked: person.profitStaked || 0,
+        profitAvailable: person.profitAvailable || 0,
+        jobsCompleted: person.jobsCompleted || 0,
+        treasuryTotal: person.treasuryTotal || 0,
+        overhead: person.overhead || 0,
+      })),
     ],
     [data]
   );
 
-  const selectedMemberData = useMemo(
+  const selectedMemberData: PersonData | undefined = useMemo(
     () =>
       teamMembers.find((member) => member.id === selectedMember) ||
       teamMembers[0],
@@ -65,10 +74,10 @@ export default function TeamMemberPanel({
 
   const renderButton = () => (
     <Button variant="outline" className="w-[150px] justify-center">
-      {selectedMemberData.icon && (
+      {selectedMemberData?.icon && (
         <selectedMemberData.icon className="mr-2 h-4 w-4" />
       )}
-      {selectedMemberData.name}
+      {selectedMemberData?.name}
     </Button>
   );
 

@@ -1,4 +1,7 @@
+import { LucideIcon } from "lucide-react";
+
 export interface PersonData {
+  icon: LucideIcon;
   id: string;
   name: string;
   profitStaked: string | number | Array<string> | null | undefined;

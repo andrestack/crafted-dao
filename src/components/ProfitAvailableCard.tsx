@@ -5,7 +5,7 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+//import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -30,9 +30,12 @@ export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
   console.log("ProfitAvailableCard - Data:", data);
 
   const dataArray = Array.isArray(data)
-    ? data.filter((person) => person && person.profitAvailable)
-    : data && data.profitAvailable
-    ? [data]
+    ? data.filter(
+        (person): person is PersonData =>
+          person && person.profitAvailable !== undefined
+      ) // Type guard to ensure person is of type PersonData
+    : data && "profitAvailable" in data // Check if data is not null and has profitAvailable
+    ? [data as PersonData] // Cast data to PersonData
     : [];
 
   const displayEmployees = dataArray.slice(0, 5).map((employee) => {

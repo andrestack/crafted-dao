@@ -10,8 +10,8 @@ import { PersonData } from "@/interfaces";
 interface DaoDashboardProps {
   data: PersonData[]; // All members' data, including global data
   selectedMemberId: string;
-  treasuryTotal: string | number | Array<string> | null | undefined;
-  overhead: string | number | Array<string> | null | undefined;
+  globalTreasury: string | number | Array<string> | null | undefined;
+  globalOverhead: string | number | Array<string> | null | undefined;
 }
 
 export default function DaoDashboard({
@@ -50,16 +50,16 @@ export default function DaoDashboard({
 
         {/* Display team data for "home" (all members) or the selected member's data */}
         <PieChartData
-          data={selectedMemberId === "home" ? data.slice(1) : [selectedMember]}
+          data={selectedMemberId === "home" ? data.slice(1) : selectedMember ? [selectedMember] : []}
         />
         <ProfitAvailableCard
-          data={selectedMemberId === "home" ? data.slice(1) : [selectedMember]}
+          data={selectedMemberId === "home" ? data.slice(1) : selectedMember ? [selectedMember] : []}
         />
       </div>
 
       {/* Pass the team data or selected member data to the ProjectCard component */}
       <ProjectCard
-        data={selectedMemberId === "home" ? data.slice(1) : [selectedMember]}
+        data={selectedMemberId === "home" ? data.slice(1) : selectedMember ? [selectedMember] : []}
       />
     </div>
   );
