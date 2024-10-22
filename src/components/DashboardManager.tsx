@@ -9,6 +9,7 @@ import TeamMemberPanel from "./TeamMemberPanel";
 import DaoDashboard from "./DaoDashboard";
 import { PersonData } from "@/interfaces";
 import { Sidebar } from "./SideBar";
+import LoadingSpinner from "./LoadingSpinner";
 
 export default function DashboardManager() {
   const [data, setData] = useState<PersonData[]>([]);
@@ -77,7 +78,12 @@ export default function DashboardManager() {
   const globalOverhead = data[0]?.overhead || [];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <LoadingSpinner />
+        <span className="text-crafted-black text-lg font-league-spartan-bold">Loading</span>
+      </div>
+    );
   }
 
   if (error) {

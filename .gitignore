@@ -41,3 +41,6 @@ next-env.d.ts
 
 # google service account
 streetcred.json
+
+# unused components
+/src/components/archive

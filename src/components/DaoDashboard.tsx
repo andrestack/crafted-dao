@@ -39,28 +39,50 @@ export default function DaoDashboard({
 
   console.log("DaoDashboard - Selected Member:", selectedMember);
 
-  
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Always display global data for Overheads and Treasury */}
-        <OverheadsCard dailyOverheads={globalOverhead} />
-        <TreasuryCard treasuryTotal={globalTreasury} />
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Always display global data for Overheads and Treasury */}
+          <TreasuryCard treasuryTotal={globalTreasury} />
+          <OverheadsCard dailyOverheads={globalOverhead} />
 
-        {/* Display team data for "home" (all members) or the selected member's data */}
-        <PieChartData
-          data={selectedMemberId === "home" ? data.slice(1) : selectedMember ? [selectedMember] : []}
-        />
-        <ProfitAvailableCard
-          data={selectedMemberId === "home" ? data.slice(1) : selectedMember ? [selectedMember] : []}
+          {/* Display team data for "home" (all members) or the selected member's data */}
+          <PieChartData
+            data={
+              selectedMemberId === "home"
+                ? data.slice(1)
+                : selectedMember
+                ? [selectedMember]
+                : []
+            }
+          />
+          <ProfitAvailableCard
+            data={
+              selectedMemberId === "home"
+                ? data.slice(1)
+                : selectedMember
+                ? [selectedMember]
+                : []
+            }
+          />
+        </div>
+
+
+        <div>
+          <ProjectCard
+          data={
+            selectedMemberId === "home"
+              ? data.slice(1)
+              : selectedMember
+              ? [selectedMember]
+              : []
+          }
         />
       </div>
 
-      {/* Pass the team data or selected member data to the ProjectCard component */}
-      <ProjectCard
-        data={selectedMemberId === "home" ? data.slice(1) : selectedMember ? [selectedMember] : []}
-      />
-    </div>
+        {/* Pass the team data or selected member data to the ProjectCard component */}
+      </div>
+    </>
   );
 }
