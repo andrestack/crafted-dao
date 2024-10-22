@@ -28,13 +28,14 @@ export default function DaoDashboard({
   console.log("DaoDashboard - selectedMemberId:", selectedMemberId);
 
   // Extract individual team member data (everything after the global data)
-  const teamData = data.slice(1);
+  //const teamData = data.slice(1);
+  //console.log("DaoDashboard - Team Data:", teamData);
 
   // Find the selected member, or use all team data for overview
   const selectedMember =
     selectedMemberId === "home"
       ? null // No specific member selected
-      : teamData.find((member) => member.id === selectedMemberId); // Find the specific member
+      : data.find((member) => member.id === selectedMemberId); // Find the specific member
 
   console.log("DaoDashboard - Selected Member:", selectedMember);
 
@@ -49,16 +50,16 @@ export default function DaoDashboard({
 
         {/* Display team data for "home" (all members) or the selected member's data */}
         <PieChartData
-          data={selectedMemberId === "home" ? teamData : [selectedMember]}
+          data={selectedMemberId === "home" ? data.slice(1) : [selectedMember]}
         />
         <ProfitAvailableCard
-          data={selectedMemberId === "home" ? teamData : [selectedMember]}
+          data={selectedMemberId === "home" ? data.slice(1) : [selectedMember]}
         />
       </div>
 
       {/* Pass the team data or selected member data to the ProjectCard component */}
       <ProjectCard
-        data={selectedMemberId === "home" ? teamData : [selectedMember]}
+        data={selectedMemberId === "home" ? data.slice(1) : [selectedMember]}
       />
     </div>
   );

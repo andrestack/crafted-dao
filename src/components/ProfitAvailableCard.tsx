@@ -30,8 +30,10 @@ export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
   console.log("ProfitAvailableCard - Data:", data);
 
   const dataArray = Array.isArray(data)
-    ? data.filter((person) => person.profitAvailable)
-    : [data].filter((person) => person.profitAvailable);
+    ? data.filter((person) => person && person.profitAvailable)
+    : data && data.profitAvailable
+    ? [data]
+    : [];
 
   const displayEmployees = dataArray.slice(0, 5).map((employee) => {
     const rawValue = employee.profitAvailable || "$0"; // Fallback to "$0" if missing
@@ -107,9 +109,9 @@ export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
         </ScrollArea>
 
         <CardFooter className="flex justify-center">
-          <Button className="text-lg font-league-spartan-bold">
+          {/* <Button className="text-lg font-league-spartan-bold">
             Available in 30 days
-          </Button>
+          </Button> */}
         </CardFooter>
       </CardContent>
     </Card>

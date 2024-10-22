@@ -52,8 +52,8 @@ export default function TeamMemberPanel({
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
-      console.log("TeamMemberPanel - Selected member:", selectedMember);
-      console.log("TeamMemberPanel - Selected member data:", selectedMemberData);
+      // console.log("TeamMemberPanel - Selected member:", selectedMember);
+      // console.log("TeamMemberPanel - Selected member data:", selectedMemberData);
     }
   }, [selectedMember, selectedMemberData]);
 
@@ -64,7 +64,7 @@ export default function TeamMemberPanel({
   };
 
   const renderButton = () => (
-    <Button variant="outline" className="w-[150px] justify-start">
+    <Button variant="outline" className="w-[150px] justify-center">
       {selectedMemberData.icon && (
         <selectedMemberData.icon className="mr-2 h-4 w-4" />
       )}

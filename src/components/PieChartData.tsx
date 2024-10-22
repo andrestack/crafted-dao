@@ -14,11 +14,10 @@ export function PieChartData({ data }: ChartDataProps) {
   console.log("PieChartData - Data:", data);
   
   // Ensure data is an array and filter out values without 'profitStaked'
-  const dataArray = Array.isArray(data) ? data.filter(person => person.profitStaked) : [data].filter(person => person.profitStaked);
+  const dataArray = Array.isArray(data) ? data.filter(person => person && person.profitStaked) : (data && data.profitStaked ? [data] : []);
 
   // Extract names and profitStaked values from the data array
   const names = dataArray.map((person) => person.name);
-  // Corrected the condition to check if profitStaked is an array and not 0
   const profitStaked = dataArray.slice(0, 4).map((person) => {
     const rawValue = person.profitStaked || 0; // Handle undefined or null
     let cleanedValue: number = 0;
@@ -54,8 +53,7 @@ export function PieChartData({ data }: ChartDataProps) {
     return cleanedValue;
   });
 
-  const hasValidProfit = profitStaked.some(value => value > 0);
-
+  
   const pieChartData = {
     labels: names,
     datasets: [
@@ -82,7 +80,7 @@ export function PieChartData({ data }: ChartDataProps) {
 
   return (
     <div className="w-full grid gap-4 md:grid-cols-2">
-      {hasValidProfit ? (
+      
         <Card className="col-span-3 w-full max-w-md bg-white border border-crafted-orange">
           <CardHeader>
             <CardTitle className="text-2xl font-league-spartan-bold text-crafted-orange">
@@ -93,9 +91,7 @@ export function PieChartData({ data }: ChartDataProps) {
           <Pie data={pieChartData} />
           </CardContent>
         </Card>
-      ) : (
-        <div>No valid profit data available to display.</div>
-      )}
+     
     </div>
   );
 }

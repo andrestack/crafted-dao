@@ -26,8 +26,7 @@ export default function DashboardManager() {
           throw new Error("Failed to fetch data");
         }
         const result = await response.json();
-        console.log("API response:", result);
-
+        
         // Assuming the API returns an array of person data
         const formattedData = result.data.map(
           (person: Omit<PersonData, "id">, index: number) => ({
@@ -35,14 +34,13 @@ export default function DashboardManager() {
             id: person.id || `person-${index}`, // Use existing id or generate one
           })
         );
-
         console.log("Formatted data:", formattedData);
         setData(formattedData);
       } catch (error) {
         setError(
           error instanceof Error ? error.message : "An unknown error occurred"
         );
-        console.error("Error fetching data:", error);
+        
       } finally {
         setLoading(false);
       }
@@ -52,18 +50,16 @@ export default function DashboardManager() {
   }, []);
 
   const handleMemberSelect = (memberId: string) => {
-    console.log("DashboardManager - Selected member ID:", memberId);
     setSelectedMember(memberId);
   };
 
   const getFilteredData = () => {
-    console.log("Current data:", data);
-    console.log("Selected member:", selectedMember);
+    
     if (selectedMember === "home") {
       return data;
     }
     const filtered = data.filter((person) => person.id === selectedMember);
-    console.log("Filtered data:", filtered);
+    
     if (filtered.length > 0) {
       return filtered; // Return filtered data as an array
     }
@@ -98,8 +94,7 @@ export default function DashboardManager() {
         setActiveMenuItem={setActiveMenuItem}
       />
       <div className="flex flex-1 flex-col">
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
+        <header className="sticky top-0 z-10 flex h-16 items-center justify-start gap-3 border-b bg-background px-4 md:px-6">
           <TeamMemberPanel
             data={data}
             selectedMember={selectedMember}

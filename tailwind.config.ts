@@ -14,6 +14,7 @@ const config: Config = {
         montserrat: ["var(--font-montserrat)"],
       },
       colors: {
+        gradient: "linear-gradient(to right, hsl(var(--crafted-orange)), hsl(var(--crafted-black)))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
