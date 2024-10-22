@@ -7,13 +7,15 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ data }: ProjectCardProps) {
-  const projectData = data.slice(1, 5).map((employee) => {
+  console.log("ProjectCard - Data:", data);
+  const projectData = data.slice(0, 5).map((employee) => {
     return {
       name: employee.name,
       jobsCompleted: employee.jobsCompleted,
     };
   });
 
+  console.log("ProjectCard - Project Data:", projectData);
   return (
     <>
       <div className="flex flex-row gap-4 w-full mt-4">
