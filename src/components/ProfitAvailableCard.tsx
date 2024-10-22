@@ -27,8 +27,13 @@ interface ProfitAvailableCardProps {
 }
 
 export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
-  // Extract and clean the available profit data
-  const displayEmployees = data.slice(1, 5).map((employee) => {
+  console.log("ProfitAvailableCard - Data:", data);
+
+  const dataArray = Array.isArray(data)
+    ? data.filter((person) => person.profitAvailable)
+    : [data].filter((person) => person.profitAvailable);
+
+  const displayEmployees = dataArray.slice(0, 5).map((employee) => {
     const rawValue = employee.profitAvailable || "$0"; // Fallback to "$0" if missing
 
     // Handle different types of rawValue, similar to other components
@@ -43,12 +48,19 @@ export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
     } else if (Array.isArray(rawValue) && rawValue.length > 0) {
       // If it's an array, clean the first element as a string
       cleanedValue = parseFloat(rawValue[0].replace(/[$,]/g, "")) || 0;
-    } else if (typeof rawValue === "object" && rawValue !== null && 'value' in rawValue) {
+    } else if (
+      typeof rawValue === "object" &&
+      rawValue !== null &&
+      "value" in rawValue
+    ) {
       // Handle the case where rawValue is an object, and extract its value
       const value = rawValue.value;
-      cleanedValue = typeof value === "string"
-        ? parseFloat(value.replace(/[$,]/g, "")) || 0
-        : typeof value === "number" ? value : 0;
+      cleanedValue =
+        typeof value === "string"
+          ? parseFloat(value.replace(/[$,]/g, "")) || 0
+          : typeof value === "number"
+          ? value
+          : 0;
     } else {
       // Fallback to 0 for unexpected cases
       cleanedValue = 0;
@@ -93,6 +105,7 @@ export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
             );
           })}
         </ScrollArea>
+
         <CardFooter className="flex justify-center">
           <Button className="text-lg font-league-spartan-bold">
             Available in 30 days
