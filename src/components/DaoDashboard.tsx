@@ -1,173 +1,65 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-  PieController,
-} from "chart.js";
-import { Home, Menu, Paintbrush } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-//import { LockInStatus } from "./LockInStatus";
-import { Sidebar } from "./SideBar";
 import { TreasuryCard } from "./TreasuryCard";
 import { OverheadsCard } from "./OverheadsCard";
-import { ChartData } from "./PieChartData";
+import { PieChartData } from "./PieChartData";
 import { ProfitAvailableCard } from "./ProfitAvailableCard";
 import { ProjectCard } from "./ProjectCard";
 import { PersonData } from "@/interfaces";
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-  PieController
-);
 
+interface DaoDashboardProps {
+  data: PersonData[]; // All members' data, including global data
+  selectedMemberId: string;
+  treasuryTotal: string | number | Array<string> | null | undefined;
+  overhead: string | number | Array<string> | null | undefined;
+}
 
-
-export function DaoDashboard() {
-  const [activeMenuItem, setActiveMenuItem] = useState("dashboard");
-  const [data, setData] = useState<PersonData[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("/api/data");
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const result = await response.json();
-        console.log(result);
-        setData(result.data);
-        setLoading(false);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError("An unknown error occurred");
-        }
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
+export default function DaoDashboard({
+  data,
+  selectedMemberId,
+  globalTreasury,
+  globalOverhead,
+}: DaoDashboardProps) {
+  if (!data || data.length === 0) {
+    return <div>No data available</div>;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-  console.log("Treasury total data in production:", data[0]?.treasuryTotal);
+  console.log("DaoDashboard - Data:", data);
+  console.log("DaoDashboard - selectedMemberId:", selectedMemberId);
 
-  const renderContent = () => {
-    switch (activeMenuItem) {
-      case "dashboard":
-        return (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <OverheadsCard dailyOverheads={data[0]?.overhead} />
-                <TreasuryCard treasuryTotal={data[0]?.treasuryTotal} />
-                <ChartData data={data} />
+  // Extract individual team member data (everything after the global data)
+  const teamData = data.slice(1);
 
-                <ProfitAvailableCard data={data} />
-              </div>
-            </div>
-            <div className="flex justify-between ">
-              <ProjectCard data={data} />
-            </div>
-          </>
-        );
-      // case "lock-in":
-      //   return (
-      //     <LockInStatus
-      //       daysLeft={30} // Replace with actual value
-      //       progressPercentage={50} // Replace with actual value
-      //     />
-      //   );
-      default:
-        return null;
-    }
-  };
+  // Find the selected member, or use all team data for overview
+  const selectedMember =
+    selectedMemberId === "home"
+      ? null // No specific member selected
+      : teamData.find((member) => member.id === selectedMemberId); // Find the specific member
+
+  console.log("DaoDashboard - Selected Member:", selectedMember);
+
+  
 
   return (
-    <div className="flex min-h-screen w-full bg-background">
-      <Sidebar
-        activeMenuItem={activeMenuItem}
-        setActiveMenuItem={setActiveMenuItem}
-      />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Always display global data for Overheads and Treasury */}
+        <OverheadsCard dailyOverheads={globalOverhead} />
+        <TreasuryCard treasuryTotal={globalTreasury} />
 
-      <div className="flex flex-1 flex-col">
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">
-          <h1 className="text-2xl font-bold">
-            {activeMenuItem === "lock-in"
-              ? "Lock-in Period Status"
-              : "Dashboard Overview"}
-          </h1>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="shrink-0 lg:hidden"
-              >
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle navigation menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-64 bg-card">
-              <nav className="grid gap-2 py-4">
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 px-3 py-2 text-lg font-semibold"
-                >
-                  <Paintbrush className="h-6 w-6" />
-                  <span>Crafted DAO</span>
-                </Link>
-                <Button
-                  variant={
-                    activeMenuItem === "dashboard" ? "secondary" : "ghost"
-                  }
-                  className="w-full justify-start"
-                  onClick={() => setActiveMenuItem("dashboard")}
-                >
-                  <Home className="mr-2 h-4 w-4" />
-                  Dashboard
-                </Button>
-                {/* <Button
-                  variant={activeMenuItem === "lock-in" ? "secondary" : "ghost"}
-                  className="w-full justify-start"
-                  onClick={() => setActiveMenuItem("lock-in")}
-                >
-                  <Clock className="mr-2 h-4 w-4" />
-                  Lock-in Period
-                </Button> */}
-              </nav>
-            </SheetContent>
-          </Sheet>
-        </header>
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          {renderContent()}
-        </main>
+        {/* Display team data for "home" (all members) or the selected member's data */}
+        <PieChartData
+          data={selectedMemberId === "home" ? teamData : [selectedMember]}
+        />
+        <ProfitAvailableCard
+          data={selectedMemberId === "home" ? teamData : [selectedMember]}
+        />
       </div>
+
+      {/* Pass the team data or selected member data to the ProjectCard component */}
+      <ProjectCard
+        data={selectedMemberId === "home" ? teamData : [selectedMember]}
+      />
     </div>
   );
 }
