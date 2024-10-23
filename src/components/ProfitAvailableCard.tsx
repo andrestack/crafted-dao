@@ -81,7 +81,7 @@ export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
     <Card className="w-full max-w-md bg-white border border-crafted-orange">
       <CardHeader>
         <CardTitle className="text-2xl font-league-spartan-bold text-crafted-orange">
-          Employee Profit Available
+          Bonus Secured and Available:
         </CardTitle>
       </CardHeader>
       <CardContent>

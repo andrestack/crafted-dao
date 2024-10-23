@@ -123,7 +123,7 @@ function MemberList({
 }) {
   return (
     <Command>
-      <CommandInput placeholder="Filter members..." />
+      {/* <CommandInput placeholder="Filter members..." /> */}
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup>

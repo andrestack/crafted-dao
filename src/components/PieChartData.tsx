@@ -86,6 +86,10 @@ export function PieChartData({ data }: ChartDataProps) {
             <CardTitle className="text-2xl font-league-spartan-bold text-crafted-orange">
             Profit Staked in $
           </CardTitle>
+            <CardTitle className="text-sm font-monserrat text-muted-foreground">
+            Profits to Defend
+          </CardTitle>
+          
         </CardHeader>
         <CardContent className="">
           <Pie data={pieChartData} />
