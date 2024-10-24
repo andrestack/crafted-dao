@@ -8,7 +8,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ data }: ProjectCardProps) {
   console.log("ProjectCard - Data:", data);
-  const projectData = data.slice(0, 5).map((employee) => {
+  const projectData = data.slice(0).map((employee) => {
     return {
       name: employee.name,
       jobsCompleted: employee.jobsCompleted,
