@@ -5,6 +5,7 @@ import { OverheadsCard } from "./OverheadsCard";
 import { PieChartData } from "./PieChartData";
 import { ProfitAvailableCard } from "./ProfitAvailableCard";
 import { ProjectCard } from "./ProjectCard";
+
 import { PersonData } from "@/interfaces";
 
 interface DaoDashboardProps {
@@ -68,21 +69,21 @@ export default function DaoDashboard({
           />
         </div>
 
-
         <div>
           <ProjectCard
-          data={
-            selectedMemberId === "home"
-              ? data.slice(1)
-              : selectedMember
-              ? [selectedMember]
-              : []
-          }
-        />
-      </div>
+            data={
+              selectedMemberId === "home"
+                ? data.slice(1)
+                : selectedMember
+                ? [selectedMember]
+                : []
+            }
+          />
+        </div>
 
         {/* Pass the team data or selected member data to the ProjectCard component */}
       </div>
+     
     </>
   );
 }

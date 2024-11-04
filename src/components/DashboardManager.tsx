@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Home, Menu, Paintbrush } from "lucide-react";
+import { Home, Menu, Paintbrush, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import TeamMemberPanel from "./TeamMemberPanel";
@@ -10,6 +10,7 @@ import DaoDashboard from "./DaoDashboard";
 import { PersonData } from "@/interfaces";
 import { Sidebar } from "./SideBar";
 import LoadingSpinner from "./LoadingSpinner";
+import FAQ from "@/components/FAQ/FAQ";
 
 export default function DashboardManager() {
   const [data, setData] = useState<PersonData[]>([]);
@@ -81,7 +82,9 @@ export default function DashboardManager() {
     return (
       <div className="flex justify-center gap-2 items-center h-screen">
         <LoadingSpinner />
-        <span className="text-crafted-black text-lg font-league-spartan-bold">Loading</span>
+        <span className="text-crafted-black text-lg font-league-spartan-bold">
+          Loading
+        </span>
       </div>
     );
   }
@@ -133,17 +136,29 @@ export default function DashboardManager() {
                   <Home className="mr-2 h-4 w-4" />
                   Dashboard
                 </Button>
+                <Button
+                  variant={activeMenuItem === "faq" ? "secondary" : "ghost"}
+                  className="w-full justify-start"
+                  onClick={() => setActiveMenuItem("faq")}
+                >
+                  <HelpCircle className="mr-2 h-4 w-4" />
+                  FAQ Section
+                </Button>
               </nav>
             </SheetContent>
           </Sheet>
         </header>
         <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          <DaoDashboard
-            data={filteredData}
-            globalTreasury={globalTreasury}
-            globalOverhead={globalOverhead}
-            selectedMemberId={selectedMember}
-          />
+          {activeMenuItem === "faq" ? (
+            <FAQ /> // Render the FAQ component when activeMenuItem is "faq"
+          ) : (
+            <DaoDashboard
+              data={filteredData}
+              globalTreasury={globalTreasury}
+              globalOverhead={globalOverhead}
+              selectedMemberId={selectedMember}
+            />
+          )}
         </main>
       </div>
     </div>
