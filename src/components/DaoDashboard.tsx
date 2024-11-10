@@ -44,7 +44,7 @@ export default function DaoDashboard({
   return (
     <>
       <div className="flex justify-center md:hidden mb-5">
-        <Logo className="h-10 w-10" />
+        <Logo className="h-20 w-20" />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
