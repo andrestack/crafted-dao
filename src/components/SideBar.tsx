@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Home, Paintbrush, HelpCircle } from "lucide-react";
+import { Home } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 
 interface MenuItem {
   label: string;
@@ -12,7 +13,7 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { label: "Dashboard", icon: <Home className="mr-2 h-4 w-4" />, value: "dashboard" },
-  { label: "FAQs", icon: <HelpCircle className="mr-2 h-4 w-4" />, value: "faq" },
+  //{ label: "FAQs", icon: <HelpCircle className="mr-2 h-4 w-4" />, value: "faq" },
   // Add more items here
 ];
 
@@ -24,10 +25,10 @@ interface SidebarProps {
 export function Sidebar({ activeMenuItem, setActiveMenuItem }: SidebarProps) {
   return (
     <aside className="hidden w-64 flex-col bg-crafted-black text-crafted-white lg:flex">
-      <div className="flex h-16 items-center px-4">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          <Paintbrush className="h-6 w-6" />
-          <span className="text-2xl font-league-spartan-bold">Crafted DAO</span>
+      <div className="flex h-32 items-center justify-center px-4 overflow-auto">
+        <Link href="/" className="">
+          <Logo className="" />
+          {/* <span className="text-2xl font-league-spartan-bold"> DAO</span> */}
         </Link>
       </div>
       <nav className="flex-1 space-y-2 p-4">

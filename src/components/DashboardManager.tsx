@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Home, Menu, Paintbrush, HelpCircle } from "lucide-react";
+import { Home, Menu } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import TeamMemberPanel from "./TeamMemberPanel";
@@ -121,10 +122,10 @@ export default function DashboardManager() {
               <nav className="grid gap-2 py-4">
                 <Link
                   href="#"
-                  className="flex items-center gap-2 px-3 py-2 text-lg font-semibold"
+                  className="flex items-center justify-center gap-2 px-3 py-2 text-lg font-semibold"
                 >
-                  <Paintbrush className="h-6 w-6" />
-                  <span>Crafted DAO</span>
+                  <Logo className="h-6 w-6" />
+                  {/* <span>Crafted DAO</span> */}
                 </Link>
                 <Button
                   variant={
@@ -136,14 +137,14 @@ export default function DashboardManager() {
                   <Home className="mr-2 h-4 w-4" />
                   Dashboard
                 </Button>
-                <Button
+                {/* <Button
                   variant={activeMenuItem === "faq" ? "secondary" : "ghost"}
                   className="w-full justify-start"
                   onClick={() => setActiveMenuItem("faq")}
                 >
                   <HelpCircle className="mr-2 h-4 w-4" />
                   FAQ Section
-                </Button>
+                </Button> */}
               </nav>
             </SheetContent>
           </Sheet>
