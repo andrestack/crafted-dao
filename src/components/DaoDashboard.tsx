@@ -5,6 +5,7 @@ import { OverheadsCard } from "./OverheadsCard";
 import { PieChartData } from "./PieChartData";
 import { ProfitAvailableCard } from "./ProfitAvailableCard";
 import { ProjectCard } from "./ProjectCard";
+import { Logo } from "@/components/ui/logo";
 
 import { PersonData } from "@/interfaces";
 
@@ -42,6 +43,10 @@ export default function DaoDashboard({
 
   return (
     <>
+      <div className="flex justify-center md:hidden mb-5">
+        <Logo className="h-10 w-10" />
+      </div>
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Always display global data for Overheads and Treasury */}

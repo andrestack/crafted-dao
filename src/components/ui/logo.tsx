@@ -1,15 +1,20 @@
 import Image from "next/image";
 
-export function Logo() {
+
+interface LogoProps {
+  className?: string;
+}
+
+export function Logo({ className }: LogoProps) {
   return (
-    <div className="flex items-center justify-center">
+    <>
       <Image
-        className="rounded-full p-1 object-contain"
+        className={`rounded-full p-1 object-contain py-1 ${className}`}
         src="/assets/logo-round.png"
         alt="Crafted Finishes Logo"
         width={100}
         height={100}
       />
-    </div>
+    </>
   );
 }

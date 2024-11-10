@@ -11,7 +11,8 @@ import DaoDashboard from "./DaoDashboard";
 import { PersonData } from "@/interfaces";
 import { Sidebar } from "./SideBar";
 import LoadingSpinner from "./LoadingSpinner";
-import FAQ from "@/components/FAQ/FAQ";
+//import FAQ from "@/components/FAQ/FAQ";
+import ChatButton from "@/components/FAQ/ChatButton";
 
 export default function DashboardManager() {
   const [data, setData] = useState<PersonData[]>([]);
@@ -107,6 +108,9 @@ export default function DashboardManager() {
             selectedMember={selectedMember}
             onMemberSelect={handleMemberSelect}
           />
+
+          <ChatButton />
+
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -150,7 +154,13 @@ export default function DashboardManager() {
           </Sheet>
         </header>
         <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          {activeMenuItem === "faq" ? (
+          <DaoDashboard
+            data={filteredData}
+            globalTreasury={globalTreasury}
+            globalOverhead={globalOverhead}
+            selectedMemberId={selectedMember}
+          />
+          {/* {activeMenuItem === "faq" ? (
             <FAQ /> // Render the FAQ component when activeMenuItem is "faq"
           ) : (
             <DaoDashboard
@@ -159,7 +169,7 @@ export default function DashboardManager() {
               globalOverhead={globalOverhead}
               selectedMemberId={selectedMember}
             />
-          )}
+          )} */}
         </main>
       </div>
     </div>
