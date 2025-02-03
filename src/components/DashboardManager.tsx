@@ -128,7 +128,7 @@ export default function DashboardManager() {
                   href="#"
                   className="flex items-center justify-center gap-2 px-3 py-2 text-lg font-semibold"
                 >
-                  <Logo className="h-6 w-6" />
+                  <Logo />
                   {/* <span>Crafted DAO</span> */}
                 </Link>
                 <Button
