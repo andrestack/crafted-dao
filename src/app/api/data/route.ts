@@ -7,7 +7,7 @@ export async function GET() {
   console.log("Received a GET request to /api/route");
   try {
     const rawCredentials = process.env.GOOGLE_CREDENTIALS;
-    //console.log("Raw credentials:", rawCredentials);
+    
     
     if (!rawCredentials) {
       throw new Error("GOOGLE_CREDENTIALS environment variable is not set");
@@ -42,9 +42,9 @@ export async function GET() {
       );
     }
 
-    const profitBankRange = "Overview!E3:J34";
+    const profitBankRange = "Overview!E3:J40";
     const treasuryTotalValue = "Overview!P14:Q17";
-    const overHeadRange = "Overview!C34";
+    const overHeadRange = "Overview!C40";
 
     const [profitBankResponse, treasuryResponse, overheadResponse] =
       await Promise.all([
@@ -85,7 +85,7 @@ export async function GET() {
       (header) => header && header.includes("Profit Staked")
     );
     const profitAvailableIndex = headers.findIndex(
-      (header) => header && header.includes("Available Now")
+      (header) => header && header.includes("Unlocked Profit")
     );
     const jobsCompletedIndex = headers.findIndex(
       (header) => header && header.includes("# Jobs Completed")
