@@ -46,7 +46,7 @@ export async function GET() {
     const profitBankRange = "Overview!E3:J40";
     const treasuryTotalValue = "Overview!P14:Q17";
     const overHeadRange = "Overview!C40";
-    const jobsRange = "Overview!A2:C38";
+    const jobsRange = "Overview!A2:C38"; // Extended to include profit data
     console.log("jobsRange", jobsRange);
 
     const [
@@ -102,7 +102,12 @@ export async function GET() {
         status: row[1].toLowerCase(),
         teamProfitShare: row[2] || "0",
       }));
-    console.log("jobsData", jobsData);
+
+    // Extract profit data from jobsRows
+    const smallJobProfit =
+      jobsRows.find((row) => row[0]?.includes("Small Job Profit"))?.[2] || "0";
+    const totalProfit =
+      jobsRows.find((row) => row[0]?.includes("Total Profit"))?.[2] || "0";
 
     // dynamically locate the headers by searching for keywords in rows
     const headers = profitBankRows.map((row) => row[0]);
@@ -130,7 +135,6 @@ export async function GET() {
     }
 
     //dynamically retrieve the rows based on their index
-
     const profitStakedRow = profitBankRows[profitStakedIndex];
     const profitAvailableRow = profitBankRows[profitAvailableIndex];
     const jobsCompletedRow = profitBankRows[jobsCompletedIndex];
@@ -150,7 +154,9 @@ export async function GET() {
       jobsCompleted: jobsCompletedRow ? jobsCompletedRow[index] : null,
       treasuryTotal: treasuryTotalRows ? treasuryTotalRows[index] : null,
       overhead: overheadRows ? overheadRows[index] : null,
-      jobs: jobsData, // Add jobs data to the response
+      jobs: jobsData,
+      smallJobProfit,
+      totalProfit,
     }));
 
     if (structuredData?.length) {
