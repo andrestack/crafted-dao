@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { PieChart, TrafficCone } from "lucide-react";
+import { PieChart, Paintbrush } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 
 interface MenuItem {
@@ -19,7 +19,7 @@ const menuItems: MenuItem[] = [
   },
   {
     label: "Projects",
-    icon: <TrafficCone className="mr-2 h-4 w-4" />,
+    icon: <Paintbrush className="mr-2 h-4 w-4" />,
     value: "projects",
   },
   // Add more items here
