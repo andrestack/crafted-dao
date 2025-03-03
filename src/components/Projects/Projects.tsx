@@ -44,10 +44,15 @@ export default function Projects({ data }: ProjectsProps) {
         />
       </div>
       <Card className="w-full bg-white border border-crafted-orange">
-        <CardHeader>
+        <CardHeader className="flex flex-row justify-between items-center">
           <CardTitle className="text-2xl font-league-spartan-bold text-crafted-orange">
             All Jobs
           </CardTitle>
+      <div className="md:hidden">
+        <h3 className="text-2xl font-league-spartan-bold text-muted-foreground italic text-center py-4">
+          &ldquo;{quote}&rdquo;
+        </h3>
+      </div>
         </CardHeader>
         <CardContent>
           <DataTable columns={columns} data={data.jobs || []} />
