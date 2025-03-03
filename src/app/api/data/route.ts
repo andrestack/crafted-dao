@@ -89,9 +89,14 @@ export async function GET() {
     const names = profitBankRows[0];
 
     // Process jobs data
+    const validStatuses = ["profitable", "unprofitable", "in_progress"];
+
     const jobsData = jobsRows
       .slice(2) // Skip the first two rows (headers)
-      .filter((row) => row[1] && row[1].toLowerCase() !== "unknown") // Only include rows with a non-unknown status
+      .filter((row) => {
+        const status = row[1]?.toLowerCase();
+        return status && validStatuses.includes(status);
+      })
       .map((row) => ({
         name: row[0] || "",
         status: row[1].toLowerCase(),

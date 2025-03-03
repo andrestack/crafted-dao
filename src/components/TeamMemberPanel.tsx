@@ -8,7 +8,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
@@ -37,7 +36,17 @@ export default function TeamMemberPanel({
 
   const teamMembers = useMemo(
     () => [
-      { id: "home", name: "Overview", icon: Home as LucideIcon, profitStaked: 0, profitAvailable: 0, jobsCompleted: 0, treasuryTotal: 0, overhead: 0 },
+      {
+        id: "home",
+        name: "Overview",
+        icon: Home as LucideIcon,
+        profitStaked: 0,
+        profitAvailable: 0,
+        jobsCompleted: 0,
+        treasuryTotal: 0,
+        overhead: 0,
+        jobs: [],
+      },
       ...data.slice(1, 5).map((person) => ({
         id: person.id,
         name: person.name,
@@ -47,6 +56,7 @@ export default function TeamMemberPanel({
         jobsCompleted: person.jobsCompleted || 0,
         treasuryTotal: person.treasuryTotal || 0,
         overhead: person.overhead || 0,
+        jobs: person.jobs || [],
       })),
     ],
     [data]
@@ -84,9 +94,7 @@ export default function TeamMemberPanel({
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          {renderButton()}
-        </PopoverTrigger>
+        <PopoverTrigger asChild>{renderButton()}</PopoverTrigger>
         <PopoverContent className="w-[200px] p-0" align="start">
           <MemberList
             teamMembers={teamMembers}
@@ -99,9 +107,7 @@ export default function TeamMemberPanel({
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        {renderButton()}
-      </DrawerTrigger>
+      <DrawerTrigger asChild>{renderButton()}</DrawerTrigger>
       <DrawerContent>
         <div className="mt-4 border-t">
           <MemberList
