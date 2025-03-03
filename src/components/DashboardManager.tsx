@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Home, Menu } from "lucide-react";
+import { Home, Menu, PieChart } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -11,7 +11,7 @@ import DaoDashboard from "./DaoDashboard";
 import { PersonData } from "@/interfaces";
 import { Sidebar } from "./SideBar";
 import LoadingSpinner from "./LoadingSpinner";
-//import FAQ from "@/components/FAQ/FAQ";
+import Projects from "./Projects/Projects";
 import ChatButton from "@/components/FAQ/ChatButton";
 
 export default function DashboardManager() {
@@ -73,8 +73,8 @@ export default function DashboardManager() {
   const filteredData = getFilteredData();
 
   useEffect(() => {
-    console.log("DashboardManager - Updated selectedMember:", selectedMember);
-    console.log("DashboardManager - Updated filteredData:", filteredData);
+    // console.log("DashboardManager - Updated selectedMember:", selectedMember);
+    // console.log("DashboardManager - Updated filteredData:", filteredData);
   }, [selectedMember, filteredData]);
 
   const globalTreasury = data[0]?.treasuryTotal || [];
@@ -129,7 +129,6 @@ export default function DashboardManager() {
                   className="flex items-center justify-center gap-2 px-3 py-2 text-lg font-semibold"
                 >
                   <Logo />
-                  {/* <span>Crafted DAO</span> */}
                 </Link>
                 <Button
                   variant={
@@ -138,30 +137,26 @@ export default function DashboardManager() {
                   className="w-full justify-start"
                   onClick={() => setActiveMenuItem("dashboard")}
                 >
-                  <Home className="mr-2 h-4 w-4" />
+                  <PieChart className="mr-2 h-4 w-4" />
                   Dashboard
                 </Button>
-                {/* <Button
-                  variant={activeMenuItem === "faq" ? "secondary" : "ghost"}
+                <Button
+                  variant={
+                    activeMenuItem === "projects" ? "secondary" : "ghost"
+                  }
                   className="w-full justify-start"
-                  onClick={() => setActiveMenuItem("faq")}
+                  onClick={() => setActiveMenuItem("projects")}
                 >
-                  <HelpCircle className="mr-2 h-4 w-4" />
-                  FAQ Section
-                </Button> */}
+                  <Home className="mr-2 h-4 w-4" />
+                  Projects
+                </Button>
               </nav>
             </SheetContent>
           </Sheet>
         </header>
         <main className="flex-1 overflow-y-auto p-4 md:p-6">
-          <DaoDashboard
-            data={filteredData}
-            globalTreasury={globalTreasury}
-            globalOverhead={globalOverhead}
-            selectedMemberId={selectedMember}
-          />
-          {/* {activeMenuItem === "faq" ? (
-            <FAQ /> // Render the FAQ component when activeMenuItem is "faq"
+          {activeMenuItem === "projects" ? (
+            <Projects data={data[0]?.jobs || []} />
           ) : (
             <DaoDashboard
               data={filteredData}
@@ -169,7 +164,7 @@ export default function DashboardManager() {
               globalOverhead={globalOverhead}
               selectedMemberId={selectedMember}
             />
-          )} */}
+          )}
         </main>
       </div>
     </div>

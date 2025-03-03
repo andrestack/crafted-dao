@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Home } from "lucide-react";
+import { Home, PieChart } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 
 interface MenuItem {
@@ -12,8 +12,8 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { label: "Dashboard", icon: <Home className="mr-2 h-4 w-4" />, value: "dashboard" },
-  //{ label: "FAQs", icon: <HelpCircle className="mr-2 h-4 w-4" />, value: "faq" },
+  { label: "Dashboard", icon: <PieChart className="mr-2 h-4 w-4" />, value: "dashboard" },
+  { label: "Projects", icon: <Home className="mr-2 h-4 w-4" />, value: "projects" },
   // Add more items here
 ];
 
