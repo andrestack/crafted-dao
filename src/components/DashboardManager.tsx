@@ -30,6 +30,7 @@ export default function DashboardManager() {
           throw new Error("Failed to fetch data");
         }
         const result = await response.json();
+        console.log("API Response:", result);
 
         // Assuming the API returns an array of person data
         const formattedData = result.data.map(
@@ -156,7 +157,13 @@ export default function DashboardManager() {
         </header>
         <main className="flex-1 overflow-y-auto p-4 md:p-6">
           {activeMenuItem === "projects" ? (
-            <Projects data={data[0]?.jobs || []} />
+            <Projects
+              data={{
+                jobs: data[0]?.jobs || [],
+                smallJobProfit: data[0]?.smallJobProfit || "0",
+                totalProfit: data[0]?.totalProfit || "0",
+              }}
+            />
           ) : (
             <DaoDashboard
               data={filteredData}
