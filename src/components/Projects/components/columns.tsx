@@ -38,11 +38,15 @@ const formatCurrency = (value: string): string => {
 export const columns: ColumnDef<JobData>[] = [
   {
     accessorKey: "name",
-    header: "Job Name",
+    header: () => (
+      <span className="text-xl font-league-spartan-bold">Job Name</span>
+    ),
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: () => (
+      <span className="text-xl font-league-spartan-bold">Status</span>
+    ),
     cell: ({ row }) => {
       const status = row.getValue("status") as string;
       return (
@@ -58,10 +62,19 @@ export const columns: ColumnDef<JobData>[] = [
   },
   {
     accessorKey: "teamProfitShare",
-    header: "Team Profit Share",
+    className: "text-center",
+    header: () => (
+      <span className="text-xl font-league-spartan-bold">
+        Team Profit Share
+      </span>
+    ),
     cell: ({ row }) => {
       const value = row.getValue("teamProfitShare") as string;
-      return <span>${formatCurrency(value)}</span>;
+      return (
+        <div className="text-left">
+          <span>${formatCurrency(value)}</span>
+        </div>
+      );
     },
   },
 ];

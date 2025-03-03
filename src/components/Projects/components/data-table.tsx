@@ -25,7 +25,7 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({
   columns,
-  data,
+  data = [],
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -91,7 +91,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {data.length > 40 && (
+      {data?.length > 40 && (
         <div className="flex items-center justify-end space-x-2 py-4">
           <Button
             variant="outline"
