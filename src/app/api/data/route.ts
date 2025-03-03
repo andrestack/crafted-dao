@@ -7,23 +7,24 @@ export async function GET() {
   console.log("Received a GET request to /api/route");
   try {
     const rawCredentials = process.env.GOOGLE_CREDENTIALS;
-    
-    
+
     if (!rawCredentials) {
       throw new Error("GOOGLE_CREDENTIALS environment variable is not set");
     }
-    
+
     // Log the first few characters of the credentials
     //console.log("First 50 characters of credentials:", rawCredentials.substring(0, 50));
-    
+
     let credentials;
     try {
       credentials = JSON.parse(rawCredentials);
     } catch (parseError) {
       console.error("Error parsing GOOGLE_CREDENTIALS:", parseError);
-      throw new Error("Invalid JSON in GOOGLE_CREDENTIALS environment variable");
+      throw new Error(
+        "Invalid JSON in GOOGLE_CREDENTIALS environment variable"
+      );
     }
-    
+
     //console.log("Parsed credentials:", credentials);
 
     const auth = new google.auth.GoogleAuth({
@@ -45,28 +46,39 @@ export async function GET() {
     const profitBankRange = "Overview!E3:J40";
     const treasuryTotalValue = "Overview!P14:Q17";
     const overHeadRange = "Overview!C40";
+    const jobsRange = "Overview!A2:C38";
+    console.log("jobsRange", jobsRange);
 
-    const [profitBankResponse, treasuryResponse, overheadResponse] =
-      await Promise.all([
-        sheets.spreadsheets.values.get({
-          spreadsheetId,
-          range: profitBankRange,
-        }),
-        sheets.spreadsheets.values.get({
-          spreadsheetId,
-          range: treasuryTotalValue,
-        }),
-        sheets.spreadsheets.values.get({
-          spreadsheetId,
-          range: overHeadRange,
-        }),
-      ]);
+    const [
+      profitBankResponse,
+      treasuryResponse,
+      overheadResponse,
+      jobsResponse,
+    ] = await Promise.all([
+      sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: profitBankRange,
+      }),
+      sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: treasuryTotalValue,
+      }),
+      sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: overHeadRange,
+      }),
+      sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: jobsRange,
+      }),
+    ]);
 
     const profitBankRows = profitBankResponse.data.values;
     const treasuryTotalRows = treasuryResponse.data.values;
     const overheadRows = overheadResponse.data.values;
-
-    if (!profitBankRows || !treasuryTotalRows || !overheadRows) {
+    const jobsRows = jobsResponse.data.values;
+    console.log("jobsRows", jobsRows);
+    if (!profitBankRows || !treasuryTotalRows || !overheadRows || !jobsRows) {
       return NextResponse.json(
         { message: "Incomplete data received from data source" },
         { status: 500 }
@@ -75,7 +87,17 @@ export async function GET() {
 
     //extract first row
     const names = profitBankRows[0];
-   
+
+    // Process jobs data
+    const jobsData = jobsRows
+      .slice(2) // Skip the first two rows (headers)
+      .filter((row) => row[1] && row[1].toLowerCase() !== "unknown") // Only include rows with a non-unknown status
+      .map((row) => ({
+        name: row[0] || "",
+        status: row[1].toLowerCase(),
+        teamProfitShare: row[2] || "0",
+      }));
+    console.log("jobsData", jobsData);
 
     // dynamically locate the headers by searching for keywords in rows
     const headers = profitBankRows.map((row) => row[0]);
@@ -123,6 +145,7 @@ export async function GET() {
       jobsCompleted: jobsCompletedRow ? jobsCompletedRow[index] : null,
       treasuryTotal: treasuryTotalRows ? treasuryTotalRows[index] : null,
       overhead: overheadRows ? overheadRows[index] : null,
+      jobs: jobsData, // Add jobs data to the response
     }));
 
     if (structuredData?.length) {
