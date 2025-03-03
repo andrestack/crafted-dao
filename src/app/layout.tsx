@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   title: "Crafted Finishes Dashboard",
   description:
     "Crafted Finishes DAO Dashboard to keep track of profits staked and shared",
+  icons: {
+    icon: "/assets/favicon.ico",
+  },
 };
 
 export default function RootLayout({
