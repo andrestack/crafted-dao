@@ -1,5 +1,17 @@
 import { LucideIcon } from "lucide-react";
 
+export type JobStatus =
+  | "profitable"
+  | "unprofitable"
+  | "in_progress"
+  | "unknown";
+
+export interface JobData {
+  name: string;
+  status: JobStatus;
+  teamProfitShare: string;
+}
+
 export interface PersonData {
   icon: LucideIcon;
   id: string;
@@ -9,4 +21,5 @@ export interface PersonData {
   jobsCompleted: string | number | Array<string> | null | undefined;
   treasuryTotal: string | number | Array<string> | null | undefined;
   overhead: string | number | Array<string> | null | undefined;
+  jobs: JobData[];
 }
