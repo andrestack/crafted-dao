@@ -47,6 +47,8 @@ export const columns: ColumnDef<JobData>[] = [
     header: () => (
       <span className="text-xl font-league-spartan-bold">Status</span>
     ),
+    sortingFn: "text",
+    enableSorting: true,
     cell: ({ row }) => {
       const status = row.getValue("status") as string;
       return (
@@ -62,7 +64,7 @@ export const columns: ColumnDef<JobData>[] = [
   },
   {
     accessorKey: "teamProfitShare",
-    
+
     header: () => (
       <span className="text-xl font-league-spartan-bold">
         Team Profit Share
