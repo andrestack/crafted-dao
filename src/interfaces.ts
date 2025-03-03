@@ -12,7 +12,13 @@ export interface JobData {
   teamProfitShare: string;
 }
 
-export interface PersonData {
+export interface ProjectsData {
+  jobs: JobData[];
+  smallJobProfit: string;
+  totalProfit: string;
+}
+
+export interface PersonData extends ProjectsData {
   icon: LucideIcon;
   id: string;
   name: string;
@@ -21,5 +27,4 @@ export interface PersonData {
   jobsCompleted: string | number | Array<string> | null | undefined;
   treasuryTotal: string | number | Array<string> | null | undefined;
   overhead: string | number | Array<string> | null | undefined;
-  jobs: JobData[];
 }

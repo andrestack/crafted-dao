@@ -62,7 +62,7 @@ export const columns: ColumnDef<JobData>[] = [
   },
   {
     accessorKey: "teamProfitShare",
-    className: "text-center",
+    
     header: () => (
       <span className="text-xl font-league-spartan-bold">
         Team Profit Share

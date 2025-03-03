@@ -46,6 +46,8 @@ export default function TeamMemberPanel({
         treasuryTotal: 0,
         overhead: 0,
         jobs: [],
+        smallJobProfit: "0",
+        totalProfit: "0",
       },
       ...data.slice(1, 5).map((person) => ({
         id: person.id,
@@ -57,6 +59,8 @@ export default function TeamMemberPanel({
         treasuryTotal: person.treasuryTotal || 0,
         overhead: person.overhead || 0,
         jobs: person.jobs || [],
+        smallJobProfit: person.smallJobProfit || "0",
+        totalProfit: person.totalProfit || "0",
       })),
     ],
     [data]
