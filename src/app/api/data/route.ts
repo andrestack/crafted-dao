@@ -47,7 +47,7 @@ export async function GET() {
     const treasuryTotalValue = "Overview!P14:Q17";
     const overHeadRange = "Overview!C40";
     const jobsRange = "Overview!A2:C38"; // Extended to include profit data
-    console.log("jobsRange", jobsRange);
+    //console.log("jobsRange", jobsRange);
 
     const [
       profitBankResponse,
@@ -77,7 +77,7 @@ export async function GET() {
     const treasuryTotalRows = treasuryResponse.data.values;
     const overheadRows = overheadResponse.data.values;
     const jobsRows = jobsResponse.data.values;
-    console.log("jobsRows", jobsRows);
+    //console.log("jobsRows", jobsRows);
     if (!profitBankRows || !treasuryTotalRows || !overheadRows || !jobsRows) {
       return NextResponse.json(
         { message: "Incomplete data received from data source" },
