@@ -27,7 +27,6 @@ const Dashboard = () => {
           throw new Error("Failed to fetch data");
         }
         const result = await response.json();
-        console.log(result);
         setData(result.data);
         setLoading(false);
       } catch (error) {

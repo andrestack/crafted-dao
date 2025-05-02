@@ -11,7 +11,7 @@ interface ChartDataProps {
 }
 
 export function PieChartData({ data }: ChartDataProps) {
-  console.log("PieChartData - Data:", data);
+  //console.log("PieChartData - Data:", data);
   
   // Ensure data is an array and filter out values without 'profitStaked'
   const dataArray = Array.isArray(data) ? data.filter(person => person && person.profitStaked) : (data && data.profitStaked ? [data] : []);

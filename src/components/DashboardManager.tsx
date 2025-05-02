@@ -30,7 +30,7 @@ export default function DashboardManager() {
           throw new Error("Failed to fetch data");
         }
         const result = await response.json();
-        console.log("API Response:", result);
+       // console.log("API Response:", result);
 
         // Assuming the API returns an array of person data
         const formattedData = result.data.map(
@@ -39,7 +39,7 @@ export default function DashboardManager() {
             id: `person-${index}`, // Generate a new ID based on the index
           })
         );
-        console.log("Formatted data:", formattedData);
+        //console.log("Formatted data:", formattedData);
         setData(formattedData);
       } catch (error) {
         setError(

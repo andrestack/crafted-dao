@@ -4,7 +4,6 @@ import { google } from "googleapis";
 //import fs from "fs/promises";
 
 export async function GET() {
-  console.log("Received a GET request to /api/route");
   try {
     const rawCredentials = process.env.GOOGLE_CREDENTIALS;
 
@@ -46,8 +45,7 @@ export async function GET() {
     const profitBankRange = "Overview!E3:L50";
     const treasuryTotalValue = "Overview!P15:Q18";
     const overHeadRange = "Overview!C50";
-    const jobsRange = "Overview!A2:C38"; // Extended to include profit data
-   
+    const jobsRange = "Overview!A2:C48"; // Extended to include profit data
 
     const [
       profitBankResponse,
@@ -74,13 +72,9 @@ export async function GET() {
     ]);
 
     const profitBankRows = profitBankResponse.data.values;
-    console.log("profitBankRows", profitBankRows);
     const treasuryTotalRows = treasuryResponse.data.values;
-    console.log("treasuryTotalRows", treasuryTotalRows);
     const overheadRows = overheadResponse.data.values;
-    console.log("overheadRows", overheadRows);
     const jobsRows = jobsResponse.data.values;
-    console.log("jobsRows", jobsRows);
     if (!profitBankRows || !treasuryTotalRows || !overheadRows || !jobsRows) {
       return NextResponse.json(
         { message: "Incomplete data received from data source" },
@@ -141,7 +135,6 @@ export async function GET() {
     const profitStakedRow = profitBankRows[profitStakedIndex];
     const profitAvailableRow = profitBankRows[profitAvailableIndex];
     const jobsCompletedRow = profitBankRows[jobsCompletedIndex];
-    
 
     if (!profitStakedRow || !profitAvailableRow || !jobsCompletedRow) {
       return NextResponse.json(

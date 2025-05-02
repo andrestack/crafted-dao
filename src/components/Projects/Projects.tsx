@@ -28,7 +28,7 @@ export default function Projects({ data }: ProjectsProps) {
   }, []);
 
   if (!data) {
-    console.log("Projects - No data received");
+    //console.log("Projects - No data received", data);
     return null;
   }
 

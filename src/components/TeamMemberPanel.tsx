@@ -49,7 +49,7 @@ export default function TeamMemberPanel({
         smallJobProfit: "0",
         totalProfit: "0",
       },
-      ...data.slice(1, 5).map((person) => ({
+      ...data.slice(1, 7).map((person) => ({
         id: person.id,
         name: person.name,
         icon: person.icon,
@@ -81,7 +81,7 @@ export default function TeamMemberPanel({
   }, [selectedMember, selectedMemberData]);
 
   const handleMemberSelect = (memberId: string) => {
-    console.log("TeamMemberPanel - Selecting member:", memberId);
+    //console.log("TeamMemberPanel - Selecting member:", memberId);
     onMemberSelect(memberId);
     setOpen(false);
   };
@@ -142,7 +142,7 @@ function MemberList({
               key={member.id}
               value={member.id}
               onSelect={() => {
-                console.log("MemberList - Selected:", member.id);
+                //console.log("MemberList - Selected:", member.id);
                 onMemberSelect(member.id);
               }}
             >

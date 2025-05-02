@@ -26,9 +26,7 @@ export default function DaoDashboard({
     return <div>No data available</div>;
   }
 
-  console.log("DaoDashboard - Data:", data);
-  console.log("DaoDashboard - selectedMemberId:", selectedMemberId);
-
+  
   // Extract individual team member data (everything after the global data)
   //const teamData = data.slice(1);
   //console.log("DaoDashboard - Team Data:", teamData);
@@ -39,8 +37,7 @@ export default function DaoDashboard({
       ? null // No specific member selected
       : data.find((member) => member.id === selectedMemberId); // Find the specific member
 
-  console.log("DaoDashboard - Selected Member:", selectedMember);
-
+  
   return (
     <>
       <div className="flex justify-center md:hidden mb-5">

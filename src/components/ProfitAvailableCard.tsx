@@ -27,7 +27,7 @@ interface ProfitAvailableCardProps {
 }
 
 export function ProfitAvailableCard({ data }: ProfitAvailableCardProps) {
-  console.log("ProfitAvailableCard - Data:", data);
+  //console.log("ProfitAvailableCard - Data:", data);
 
   const dataArray = Array.isArray(data)
     ? data.filter(
