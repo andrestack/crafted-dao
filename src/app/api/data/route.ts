@@ -43,11 +43,11 @@ export async function GET() {
       );
     }
 
-    const profitBankRange = "Overview!E3:J40";
-    const treasuryTotalValue = "Overview!P14:Q17";
-    const overHeadRange = "Overview!C40";
+    const profitBankRange = "Overview!E3:L50";
+    const treasuryTotalValue = "Overview!P15:Q18";
+    const overHeadRange = "Overview!C50";
     const jobsRange = "Overview!A2:C38"; // Extended to include profit data
-    //console.log("jobsRange", jobsRange);
+   
 
     const [
       profitBankResponse,
@@ -74,10 +74,13 @@ export async function GET() {
     ]);
 
     const profitBankRows = profitBankResponse.data.values;
+    console.log("profitBankRows", profitBankRows);
     const treasuryTotalRows = treasuryResponse.data.values;
+    console.log("treasuryTotalRows", treasuryTotalRows);
     const overheadRows = overheadResponse.data.values;
+    console.log("overheadRows", overheadRows);
     const jobsRows = jobsResponse.data.values;
-    //console.log("jobsRows", jobsRows);
+    console.log("jobsRows", jobsRows);
     if (!profitBankRows || !treasuryTotalRows || !overheadRows || !jobsRows) {
       return NextResponse.json(
         { message: "Incomplete data received from data source" },
@@ -138,6 +141,7 @@ export async function GET() {
     const profitStakedRow = profitBankRows[profitStakedIndex];
     const profitAvailableRow = profitBankRows[profitAvailableIndex];
     const jobsCompletedRow = profitBankRows[jobsCompletedIndex];
+    
 
     if (!profitStakedRow || !profitAvailableRow || !jobsCompletedRow) {
       return NextResponse.json(
