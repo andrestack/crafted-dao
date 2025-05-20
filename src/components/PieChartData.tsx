@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PersonData } from "@/interfaces";
 
@@ -12,16 +12,19 @@ interface ChartDataProps {
 
 export function PieChartData({ data }: ChartDataProps) {
   //console.log("PieChartData - Data:", data);
-  
+
   // Ensure data is an array and filter out values without 'profitStaked'
-  const dataArray = Array.isArray(data) ? data.filter(person => person && person.profitStaked) : (data && data.profitStaked ? [data] : []);
+  const dataArray = Array.isArray(data)
+    ? data.filter((person) => person && person.profitStaked)
+    : data && data.profitStaked
+    ? [data]
+    : [];
 
   // Extract names and profitStaked values from the data array
   const names = dataArray.map((person) => person.name);
-  const profitStaked = dataArray.slice(0, 4).map((person) => {
+  const profitStaked = dataArray.slice(0, 7).map((person) => {
     const rawValue = person.profitStaked || 0; // Handle undefined or null
     let cleanedValue: number = 0;
-    
 
     if (typeof rawValue === "string") {
       // Clean string values by removing $ and commas
@@ -53,7 +56,6 @@ export function PieChartData({ data }: ChartDataProps) {
     return cleanedValue;
   });
 
-  
   const pieChartData = {
     labels: names,
     datasets: [
@@ -65,6 +67,8 @@ export function PieChartData({ data }: ChartDataProps) {
           "rgba(255, 206, 86, 0.6)",
           "rgba(75, 192, 192, 0.6)",
           "rgba(153, 102, 255, 0.6)",
+          "rgba(255, 159, 64, 0.6)",
+          "rgba(70, 100, 100, 0.6)",
         ],
         borderColor: [
           "rgba(255, 99, 132, 1)",
@@ -72,6 +76,7 @@ export function PieChartData({ data }: ChartDataProps) {
           "rgba(255, 206, 86, 1)",
           "rgba(75, 192, 192, 1)",
           "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
         ],
         borderWidth: 1,
       },
@@ -80,22 +85,19 @@ export function PieChartData({ data }: ChartDataProps) {
 
   return (
     <div className="w-full grid gap-4 md:grid-cols-2">
-      
-        <Card className="col-span-3 w-full max-w-md bg-white border border-crafted-orange">
-          <CardHeader>
-            <CardTitle className="text-2xl font-league-spartan-bold text-crafted-orange">
+      <Card className="col-span-3 w-full max-w-md bg-white border border-crafted-orange">
+        <CardHeader>
+          <CardTitle className="text-2xl font-league-spartan-bold text-crafted-orange">
             Profit Staked in $
           </CardTitle>
-            <CardTitle className="text-sm font-monserrat text-muted-foreground">
+          <CardTitle className="text-sm font-monserrat text-muted-foreground">
             Profits to Defend
           </CardTitle>
-          
         </CardHeader>
         <CardContent className="">
           <Pie data={pieChartData} />
-          </CardContent>
-        </Card>
-     
+        </CardContent>
+      </Card>
     </div>
   );
 }

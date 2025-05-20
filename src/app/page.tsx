@@ -5,9 +5,11 @@ import DashboardManager from '@/components/DashboardManager';
 
 export default function Home() {
   return (
+    <main>
     <div className="font-montserrat">
       <DashboardManager />
       {/* <N8nChat /> */}
     </div>
+    </main>
   )
 }

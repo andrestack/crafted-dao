@@ -16,6 +16,7 @@ export function ProjectCard({ data }: ProjectCardProps) {
   });
 
   console.log("ProjectCard - Project Data:", projectData);
+  
   return (
     <>
       <div className="flex flex-col gap-4 w-full lg:mt-0">
