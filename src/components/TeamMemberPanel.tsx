@@ -49,7 +49,7 @@ export default function TeamMemberPanel({
         smallJobProfit: "0",
         totalProfit: "0",
       },
-      ...data.slice(1, 7).map((person) => ({
+      ...data.slice(1, 8).map((person) => ({
         id: person.id,
         name: person.name,
         icon: person.icon,
