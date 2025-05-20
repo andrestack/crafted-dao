@@ -77,6 +77,7 @@ export function PieChartData({ data }: ChartDataProps) {
           "rgba(75, 192, 192, 1)",
           "rgba(153, 102, 255, 1)",
           "rgba(255, 159, 64, 1)",
+          "rgba(70, 100, 100, 0.6)",
         ],
         borderWidth: 1,
       },
